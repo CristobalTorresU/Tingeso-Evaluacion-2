@@ -1,0 +1,39 @@
+server:
+  port: 8080
+eurka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: '*'
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: vehicles
+          uri: lb://vehicles:8090
+          predicates:
+            - Path=/orders/**
+        - id: repairs
+          uri: lb://repairs:8091
+          predicates:
+            - Path=/repairs/**
+        - id: repairs-list
+          uri: lb://repairs-list:8092
+          predicates:
+            - Path=/repairs
+        - id: reports
+          uri: lb://reports:8093
+          predicates:
+            - Path=/reports/**
