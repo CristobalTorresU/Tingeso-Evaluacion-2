@@ -24,16 +24,20 @@ spring:
         - id: vehicles
           uri: lb://vehicles:8090
           predicates:
-            - Path=/orders/**
+            - Path=/api/vehicles/**
         - id: repairs
           uri: lb://repairs:8091
           predicates:
-            - Path=/repairs/**
+            - Path=/api/repairs/**
         - id: repairs-list
           uri: lb://repairs-list:8092
           predicates:
-            - Path=/repairs
+            - Path=/api/repairs/**
         - id: reports
           uri: lb://reports:8093
           predicates:
-            - Path=/reports/**
+            - Path=/api/reports/**
+        - id: bonuses
+          uri: lb://bonuses:8094
+          predicates:
+            - Path=/api/bonuses/**
