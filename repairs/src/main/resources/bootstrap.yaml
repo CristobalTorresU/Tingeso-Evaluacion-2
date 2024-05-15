@@ -11,9 +11,9 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8090
+      uri: http://localhost:8091
   datasource:
-    url: jdbc:postgresql://localhost:5432/vehicles-bd
+    url: jdbc:postgresql://localhost:5432/repairs-bd
     username: postgres
     password: postgres
   jpa:
