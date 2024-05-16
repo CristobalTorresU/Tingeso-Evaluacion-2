@@ -2,9 +2,9 @@ server:
   port: 8094
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/vehicles-db
+    url: jdbc:postgresql://localhost:5432/bonuses_db
     username: postgres
-    password: postgres
+    password: 1234
 eureka:
   instance:
     hostname: localhost

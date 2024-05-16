@@ -7,15 +7,15 @@ eureka:
 
 spring:
   application:
-    name: vehicle
+    name: repair-list
   cloud:
     config:
       enabled: true
       uri: http://localhost:8092
   datasource:
-    url: jdbc:postgresql://localhost:5432/repair-list-bd
+    url: jdbc:postgresql://localhost:5432/repair_list_db
     username: postgres
-    password: postgres
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: update

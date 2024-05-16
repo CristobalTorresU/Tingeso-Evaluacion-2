@@ -7,15 +7,15 @@ eureka:
 
 spring:
   application:
-    name: vehicle
+    name: bonus
   cloud:
     config:
       enabled: true
       uri: http://localhost:8094
   datasource:
-    url: jdbc:postgresql://localhost:5432/bonuses-bd
+    url: jdbc:postgresql://localhost:5432/bonuses_db
     username: postgres
-    password: postgres
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: update

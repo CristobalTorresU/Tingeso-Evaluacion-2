@@ -13,9 +13,9 @@ spring:
       enabled: true
       uri: http://localhost:8090
   datasource:
-    url: jdbc:postgresql://localhost:5432/vehicles-bd
+    url: jdbc:postgresql://localhost:5432/vehicles_db
     username: postgres
-    password: postgres
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: update

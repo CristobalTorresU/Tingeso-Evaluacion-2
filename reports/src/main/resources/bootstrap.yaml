@@ -7,15 +7,15 @@ eureka:
 
 spring:
   application:
-    name: vehicle
+    name: report
   cloud:
     config:
       enabled: true
       uri: http://localhost:8093
   datasource:
-    url: jdbc:postgresql://localhost:5432/reports-bd
+    url: jdbc:postgresql://localhost:5432/reports_db
     username: postgres
-    password: postgres
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: update
