@@ -9,25 +9,20 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "repair")
+@Table(name = "detail")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RepairEntity {
+public class DetailEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
 
-    private LocalDate checkinDate;
-    private LocalTime checkinHour;
-    private int totalAmount;
-    private int rechargesAmount;
-    private int discountsAmount;
-    private int iva;
-    private LocalDate exitDate;
-    private LocalTime exitHour;
-    private LocalDate collectDate;
-    private LocalTime collectHour;
+    private String plate;
+    private String repairType;
+    private LocalDate date;
+    private LocalTime hour;
+    private int amount;
 }

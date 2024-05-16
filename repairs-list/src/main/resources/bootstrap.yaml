@@ -1,0 +1,21 @@
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: vehicle
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8092
+  datasource:
+    url: jdbc:postgresql://localhost:5432/repair-list-bd
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
