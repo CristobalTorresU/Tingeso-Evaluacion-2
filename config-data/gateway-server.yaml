@@ -1,6 +1,6 @@
 server:
   port: 8080
-eurka:
+eureka:
   instance:
     hostname: localhost
   client:

@@ -7,11 +7,11 @@ eureka:
 
 spring:
   application:
-    name: vehicle
+    name: vehicles
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8090
+      uri: http://localhost:8888
   datasource:
     url: jdbc:postgresql://localhost:5432/vehicles_db
     username: postgres

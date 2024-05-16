@@ -7,13 +7,13 @@ eureka:
 
 spring:
   application:
-    name: repair-list
+    name: repairs-list
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8092
+      uri: http://localhost:8888
   datasource:
-    url: jdbc:postgresql://localhost:5432/repair_list_db
+    url: jdbc:postgresql://localhost:5432/repairs_list_db
     username: postgres
     password: 1234
   jpa:

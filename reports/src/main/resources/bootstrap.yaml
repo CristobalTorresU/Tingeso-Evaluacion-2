@@ -7,11 +7,11 @@ eureka:
 
 spring:
   application:
-    name: report
+    name: reports
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8093
+      uri: http://localhost:8888
   datasource:
     url: jdbc:postgresql://localhost:5432/reports_db
     username: postgres

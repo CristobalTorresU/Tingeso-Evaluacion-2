@@ -7,11 +7,11 @@ eureka:
 
 spring:
   application:
-    name: bonus
+    name: bonuses
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8094
+      uri: http://localhost:8888
   datasource:
     url: jdbc:postgresql://localhost:5432/bonuses_db
     username: postgres
