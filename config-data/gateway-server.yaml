@@ -32,7 +32,7 @@ spring:
         - id: repairs-list
           uri: lb://repairs-list:8092
           predicates:
-            - Path=/api/repairs/**
+            - Path=/api/repair-list/**
         - id: reports
           uri: lb://reports:8093
           predicates:
