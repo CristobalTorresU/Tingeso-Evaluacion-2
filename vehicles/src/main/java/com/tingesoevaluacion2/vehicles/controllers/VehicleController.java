@@ -27,6 +27,12 @@ public class VehicleController {
         return ResponseEntity.ok(vehicle);
     }
 
+    @GetMapping("/{plate}")
+    public ResponseEntity<VehicleEntity> getVehicleByPlate(@PathVariable String plate) {
+        VehicleEntity vehicle = vehicleService.getVehicleByPlate(plate);
+        return ResponseEntity.ok(vehicle);
+    }
+
     @PostMapping("/")
     public ResponseEntity<VehicleEntity> saveVehicle(@RequestBody VehicleEntity vehicle) {
         VehicleEntity vehicleNew = vehicleService.saveVehicle(vehicle);

@@ -12,7 +12,6 @@ import java.util.List;
 public interface DetailRepository extends JpaRepository<DetailEntity, Long>{
     public List<DetailEntity> findByPlate(String plate);
 
-    // TODO: Hacer que tome el ultimo año solamente.
-    @Query(value = "SELECT * FROM detail d WHERE deta.plate = :plate AND d.date BETWEEN ?2 AND ?3", nativeQuery = true)
-    List<DetailEntity> findByPlateAndDateBetween(@Param("plate") String plate);
+    @Query(value = "SELECT * FROM detail WHERE detail.plate = :plate AND detail.date >= CURRENT_DATE - '1 YEAR'", nativeQuery = true)
+    List<DetailEntity> findByPlateLastYear(@Param("plate") String plate);
 }

@@ -27,6 +27,12 @@ public class BonusController {
         return ResponseEntity.ok(bonus);
     }
 
+    @GetMapping("/{brand}")
+    public ResponseEntity<BonusEntity> getBonusByBrand(@PathVariable String brand) {
+        BonusEntity bonus = bonusService.getBonusByBrand(brand);
+        return ResponseEntity.ok(bonus);
+    }
+
     @PostMapping("/")
     public ResponseEntity<BonusEntity> saveBonus(@RequestBody BonusEntity bonus) {
         BonusEntity bonusNew = bonusService.saveBonus(bonus);

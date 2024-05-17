@@ -18,8 +18,8 @@ public class RepairListEntity {
     private Long id;
 
     private String repairName;
-    private int gasolineamount;
-    private int dieselamount;
-    private int hibridAmount;
-    private int electricamount;
+    private double gasolineAmount;
+    private double dieselAmount;
+    private double hibridAmount;
+    private double electricAmount;
 }

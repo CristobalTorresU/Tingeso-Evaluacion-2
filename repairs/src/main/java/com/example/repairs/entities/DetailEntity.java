@@ -25,4 +25,5 @@ public class DetailEntity {
     private LocalDate date;
     private LocalTime hour;
     private int amount;
+    private Long repair_id;
 }

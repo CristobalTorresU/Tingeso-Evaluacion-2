@@ -1,5 +1,7 @@
 package com.example.repairs.services;
 
+import com.example.repairs.models.BonusModel;
+import com.example.repairs.models.RepairListModel;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -8,16 +10,28 @@ import java.time.LocalTime;
 
 @Service
 public class CalculateService {
-    // TODO: Sacar desde el microservicio de lista de reparaciones
-    public double getReparationTypePrice(String motor, int repair) {
+    public double getReparationTypePrice(String motor, RepairListModel repairList) {
         double price = 0.0;
+
+        switch (motor) {
+            case "Gasolina":
+                price = repairList.getGasolineamount();
+                break;
+            case "Diésel":
+                price = repairList.getDieselamount();
+                break;
+            case "Híbrido":
+                price = repairList.getHibridAmount();
+                break;
+            case "Eléctrico":
+                price = repairList.getElectricamount();
+                break;
+        }
 
         return price;
     }
 
-    // TODO: Sacar desde el microservicio de los bonus
-    /*
-    public double getBonusDiscount(BonusEntity bonuses) {
+    public double getBonusDiscount(BonusModel bonuses) {
         double bonusDiscount = 0.0;
         // TODO: Verificar si cuando no se encuentra nada retorna null.
         if (bonuses != null) {
@@ -29,8 +43,6 @@ public class CalculateService {
 
         return bonusDiscount;
     }
-    */
-
 
     public double getReparationsDiscount(String motor, int totalRepairs) {
         double repairsDiscount = 0.0;

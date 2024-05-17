@@ -1,9 +1,14 @@
 package com.example.repairs.services;
 
+import com.example.repairs.entities.DetailEntity;
 import com.example.repairs.entities.RepairEntity;
+import com.example.repairs.models.BonusModel;
+import com.example.repairs.models.RepairListModel;
+import com.example.repairs.models.VehicleModel;
 import com.example.repairs.repositories.RepairRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,6 +21,10 @@ public class RepairService {
     RepairRepository repairRepository;
     @Autowired
     DetailService detailService;
+    @Autowired
+    CalculateService calculateService;
+    @Autowired
+    RestTemplate restTemplate;
 
     public ArrayList<RepairEntity> getRepairs() {
         return (ArrayList<RepairEntity>) repairRepository.findAll();
@@ -38,15 +47,86 @@ public class RepairService {
         }
     }
 
-    /*
-    TODO: Tomar lista de reparaciones desde el otro microservicio.
-     */
-    public boolean calculateTotalAmount(LocalDate checkinDate,
-                                        LocalTime checkinHour,
-                                        LocalDate collectDate,
-                                        LocalTime collectHour,
-                                        LocalDate exitDate,
-                                        LocalTime exitHour) {
+    public BonusModel getBonus(String brand) {
+        return restTemplate.getForObject("http://bonuses:8094/api/bonuses/" + brand, BonusModel.class);
+    }
+
+    // TODO: Verificar si funciona el formato del string en la URL utilizando espacios y tildes.
+    public RepairListModel getRepairList(String repair) {
+        return restTemplate.getForObject("http://repairs-list:8092/api/repair-list/" + repair, RepairListModel.class);
+    }
+
+    // TODO: Tomar lista de reparaciones desde el otro microservicio.
+    // TODO: Generar el detalle de la reparación.
+    // TODO: Obtener los datos del vehiculo mediante su microservicio.
+    // TODO: Obtener los bonus mediante el microservicio.
+    public boolean calculateTotalAmount(String plate,
+                                        String checkinDateString,
+                                        String checkinHourString,
+                                        String repairName,
+                                        String collectDateString,
+                                        String collectHourString,
+                                        String exitDateString,
+                                        String exitHourString) {
+        // Formatear Fechas
+        LocalDate checkinDate = LocalDate.parse(checkinDateString);
+        LocalDate exitDate = LocalDate.parse(exitDateString);
+        LocalDate collectDate = LocalDate.parse(collectDateString);
+
+        // Formatear Horas
+        LocalTime checkinHour = LocalTime.parse(checkinHourString);
+        LocalTime exitHour = LocalTime.parse(exitHourString);
+        LocalTime collectHour = LocalTime.parse(collectHourString);
+
+        RepairEntity repair = new RepairEntity();
+        DetailEntity detail = new DetailEntity();
+
+        // TODO: Reemplazar el como se consigue el vehiculo con el plate.
+        VehicleModel vehicle = detailService.getVehicle(plate);
+        // TODO: Reemplazar el como se consigue el bonus con el brand.
+        // TODO: Hacer que se utilice la marca proporcionada por el detail.
+        BonusModel bonuses = getBonus(vehicle.getBrand());
+
+        int totalPrice;
+        double reparations = calculateService.getReparationTypePrice(vehicle.getMotor(), getRepairList(repairName));
+        double mileageRecharges = reparations * calculateService.getMileageRecharge(vehicle.getType(), vehicle.getMileage());
+        double yearRecharge = reparations * calculateService.getYearRecharge(vehicle.getType(), vehicle.getYear(), checkinDate);
+        double lateRecharge = reparations * calculateService.getLateRecharge(exitDate, collectDate);
+        double reparationDiscounts = reparations * calculateService.getReparationsDiscount(vehicle.getMotor(),
+                detailService.getDetailsByPlate(plate).size());
+        double dayDiscount = reparations * calculateService.getDayDiscount(checkinDate, checkinHour);
+        double bonusDiscount = calculateService.getBonusDiscount(bonuses);
+
+        int discounts = (int)reparationDiscounts + (int)dayDiscount + (int)bonusDiscount;
+        int recharges = (int)mileageRecharges + (int)yearRecharge + (int)lateRecharge;
+        int iva = (int)(reparations * 0.19);
+
+        totalPrice = ((int)reparations + recharges - discounts) + iva;
+
+        // Atributos para la reparacion
+        repair.setCheckinDate(checkinDate);
+        repair.setCheckinHour(checkinHour);
+        repair.setExitDate(exitDate);
+        repair.setExitHour(exitHour);
+        repair.setCollectDate(collectDate);
+        repair.setCollectHour(collectHour);
+        repair.setTotalAmount(totalPrice);
+        repair.setIva(iva);
+        repair.setDiscountsAmount(discounts);
+        repair.setRechargesAmount(recharges);
+
+        // Atributos para el detalle
+        detail.setPlate(plate);
+        detail.setRepairType(repairName);
+        detail.setDate(checkinDate);
+        detail.setHour(checkinHour);
+        detail.setAmount(totalPrice);
+
+        repairRepository.save(repair);
+
+        detail.setRepair_id(repair.getId());
+        detailService.saveDetail(detail);
+
         return true;
     }
 }
