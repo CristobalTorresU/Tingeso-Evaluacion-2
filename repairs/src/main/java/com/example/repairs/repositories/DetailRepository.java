@@ -12,6 +12,6 @@ import java.util.List;
 public interface DetailRepository extends JpaRepository<DetailEntity, Long>{
     public List<DetailEntity> findByPlate(String plate);
 
-    @Query(value = "SELECT * FROM detail WHERE detail.plate = :plate AND detail.date >= CURRENT_DATE - '1 YEAR'", nativeQuery = true)
+    @Query(value = "SELECT * FROM detail WHERE detail.plate = :plate AND detail.date >= CURRENT_DATE - INTERVAL '1 YEAR'", nativeQuery = true)
     List<DetailEntity> findByPlateLastYear(@Param("plate") String plate);
 }

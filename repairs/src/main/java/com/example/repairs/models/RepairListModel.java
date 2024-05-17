@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class RepairListModel {
     private String repairName;
-    private int gasolineamount;
-    private int dieselamount;
+    private int gasolineAmount;
+    private int dieselAmount;
     private int hibridAmount;
-    private int electricamount;
+    private int electricAmount;
 }

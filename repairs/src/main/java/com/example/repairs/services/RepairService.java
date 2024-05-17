@@ -48,12 +48,12 @@ public class RepairService {
     }
 
     public BonusModel getBonus(String brand) {
-        return restTemplate.getForObject("http://bonuses:8094/api/bonuses/" + brand, BonusModel.class);
+        return restTemplate.getForObject("http://bonuses:8094/api/bonuses/by-brand/" + brand, BonusModel.class);
     }
 
     // TODO: Verificar si funciona el formato del string en la URL utilizando espacios y tildes.
     public RepairListModel getRepairList(String repair) {
-        return restTemplate.getForObject("http://repairs-list:8092/api/repair-list/" + repair, RepairListModel.class);
+        return restTemplate.getForObject("http://repairs-list:8092/api/repair-list/by-repair/" + repair, RepairListModel.class);
     }
 
     // TODO: Tomar lista de reparaciones desde el otro microservicio.
@@ -64,10 +64,10 @@ public class RepairService {
                                         String checkinDateString,
                                         String checkinHourString,
                                         String repairName,
-                                        String collectDateString,
-                                        String collectHourString,
                                         String exitDateString,
-                                        String exitHourString) {
+                                        String exitHourString,
+                                        String collectDateString,
+                                        String collectHourString) {
         // Formatear Fechas
         LocalDate checkinDate = LocalDate.parse(checkinDateString);
         LocalDate exitDate = LocalDate.parse(exitDateString);
@@ -81,14 +81,17 @@ public class RepairService {
         RepairEntity repair = new RepairEntity();
         DetailEntity detail = new DetailEntity();
 
-        // TODO: Reemplazar el como se consigue el vehiculo con el plate.
         VehicleModel vehicle = detailService.getVehicle(plate);
-        // TODO: Reemplazar el como se consigue el bonus con el brand.
-        // TODO: Hacer que se utilice la marca proporcionada por el detail.
         BonusModel bonuses = getBonus(vehicle.getBrand());
 
+        RepairListModel repairList = getRepairList(repairName);
+
+        // DEBUG
+        System.out.println("Motor: " + vehicle.getMotor());
+        System.out.println("Reparacion: " + repairList.getGasolineAmount());
+
         int totalPrice;
-        double reparations = calculateService.getReparationTypePrice(vehicle.getMotor(), getRepairList(repairName));
+        double reparations = calculateService.getReparationTypePrice(vehicle.getMotor(), repairList);
         double mileageRecharges = reparations * calculateService.getMileageRecharge(vehicle.getType(), vehicle.getMileage());
         double yearRecharge = reparations * calculateService.getYearRecharge(vehicle.getType(), vehicle.getYear(), checkinDate);
         double lateRecharge = reparations * calculateService.getLateRecharge(exitDate, collectDate);

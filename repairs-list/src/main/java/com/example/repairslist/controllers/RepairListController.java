@@ -27,7 +27,7 @@ public class RepairListController {
         return ResponseEntity.ok(repair);
     }
 
-    @GetMapping("/{repairName}")
+    @GetMapping("/by-repair/{repairName}")
     public ResponseEntity<RepairListEntity> getRepairListByName(@PathVariable String repairName) {
         RepairListEntity repair = repairListService.getRepairListByName(repairName);
         return ResponseEntity.ok(repair);

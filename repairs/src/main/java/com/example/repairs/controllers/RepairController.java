@@ -1,6 +1,8 @@
 package com.example.repairs.controllers;
 
 import com.example.repairs.entities.RepairEntity;
+import com.example.repairs.models.BonusModel;
+import com.example.repairs.models.RepairListModel;
 import com.example.repairs.services.RepairService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +47,17 @@ public class RepairController {
         repairService.calculateTotalAmount(plate, checkinDate, checkinHour, repair,
                 exitDate, exitHour, collectDate, collectHour);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/bonuses/{brand}")
+    public ResponseEntity<BonusModel> getBonus(@PathVariable String brand) {
+        BonusModel bonus = repairService.getBonus(brand);
+        return ResponseEntity.ok(bonus);
+    }
+
+    @GetMapping("/repair-list/{repair}")
+    public ResponseEntity<RepairListModel> getRepairList(@PathVariable String repair) {
+        RepairListModel repairList = repairService.getRepairList(repair);
+        return ResponseEntity.ok(repairList);
     }
 }

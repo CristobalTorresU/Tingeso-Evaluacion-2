@@ -27,7 +27,7 @@ public class BonusController {
         return ResponseEntity.ok(bonus);
     }
 
-    @GetMapping("/{brand}")
+    @GetMapping("/by-brand/{brand}")
     public ResponseEntity<BonusEntity> getBonusByBrand(@PathVariable String brand) {
         BonusEntity bonus = bonusService.getBonusByBrand(brand);
         return ResponseEntity.ok(bonus);

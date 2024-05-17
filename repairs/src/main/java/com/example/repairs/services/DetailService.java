@@ -41,6 +41,6 @@ public class DetailService {
     }
 
     public VehicleModel getVehicle(String plate) {
-        return restTemplate.getForObject("http://vehicles:8090/api/vehicles/" + plate, VehicleModel.class);
+        return restTemplate.getForObject("http://vehicles:8090/api/vehicles/by-plate/" + plate, VehicleModel.class);
     }
 }

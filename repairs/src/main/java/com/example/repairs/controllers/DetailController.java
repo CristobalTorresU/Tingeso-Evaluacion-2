@@ -1,6 +1,7 @@
 package com.example.repairs.controllers;
 
 import com.example.repairs.entities.DetailEntity;
+import com.example.repairs.models.VehicleModel;
 import com.example.repairs.services.DetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +26,11 @@ public class DetailController {
     public ResponseEntity<List<DetailEntity>> getDetailById(@PathVariable Long id) {
         List<DetailEntity> detail = detailService.getRepairById(id);
         return ResponseEntity.ok(detail);
+    }
+
+    @GetMapping("/vehicles/{plate}")
+    public ResponseEntity<VehicleModel> getVehicle(@PathVariable String plate) {
+        VehicleModel vehicle = detailService.getVehicle(plate);
+        return ResponseEntity.ok(vehicle);
     }
 }

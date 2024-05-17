@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/vehicles")
+@RequestMapping("/api/vehicles")
 @CrossOrigin("*")
 public class VehicleController {
     @Autowired
@@ -27,7 +27,7 @@ public class VehicleController {
         return ResponseEntity.ok(vehicle);
     }
 
-    @GetMapping("/{plate}")
+    @GetMapping("/by-plate/{plate}")
     public ResponseEntity<VehicleEntity> getVehicleByPlate(@PathVariable String plate) {
         VehicleEntity vehicle = vehicleService.getVehicleByPlate(plate);
         return ResponseEntity.ok(vehicle);

@@ -15,18 +15,19 @@ public class CalculateService {
 
         switch (motor) {
             case "Gasolina":
-                price = repairList.getGasolineamount();
+                price = repairList.getGasolineAmount();
                 break;
             case "Diésel":
-                price = repairList.getDieselamount();
+                price = repairList.getDieselAmount();
                 break;
             case "Híbrido":
                 price = repairList.getHibridAmount();
                 break;
             case "Eléctrico":
-                price = repairList.getElectricamount();
+                price = repairList.getElectricAmount();
                 break;
         }
+        System.out.println("Precio de reparación: " + price);
 
         return price;
     }
