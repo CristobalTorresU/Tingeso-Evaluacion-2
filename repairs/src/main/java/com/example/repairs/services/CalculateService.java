@@ -35,6 +35,7 @@ public class CalculateService {
     public double getBonusDiscount(BonusModel bonuses) {
         double bonusDiscount = 0.0;
         if (bonuses != null) {
+            // TODO: Mandar un put para hacer que disminuya en 1 unidad la cantidad de bonos.
             if (bonuses.getQuantity() > 0) {
                 bonusDiscount = bonuses.getAmount();
                 bonuses.setQuantity(bonuses.getQuantity() - 1);

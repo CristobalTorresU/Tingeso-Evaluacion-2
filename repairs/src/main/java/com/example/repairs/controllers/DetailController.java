@@ -28,11 +28,13 @@ public class DetailController {
         return ResponseEntity.ok(detail);
     }
 
+    /*
     @GetMapping("/by-repair-id/{repair_id}")
     public ResponseEntity<List<DetailEntity>> getDetailsByRepair_Id(@PathVariable Long repair_id) {
         List<DetailEntity> details = detailService.getDetailsByRepair_Id(repair_id);
         return ResponseEntity.ok(details);
     }
+     */
 
     @GetMapping("/vehicles/{plate}")
     public ResponseEntity<VehicleModel> getVehicle(@PathVariable String plate) {

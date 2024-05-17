@@ -35,6 +35,7 @@ public class RepairController {
         return ResponseEntity.noContent().build();
     }
 
+    /*
     @GetMapping("/calculate")
     public ResponseEntity<Void> calculatePrice(@RequestParam("plate") String plate,
                                                @RequestParam("checkinDate") String checkinDate,
@@ -45,6 +46,21 @@ public class RepairController {
                                                @RequestParam("collectDate") String collectDate,
                                                @RequestParam("collectHour") String collectHour) {
         repairService.calculateTotalAmount(plate, checkinDate, checkinHour, repair,
+                exitDate, exitHour, collectDate, collectHour);
+        return ResponseEntity.noContent().build();
+    }
+    */
+
+    @GetMapping("/calculate")
+    public ResponseEntity<Void> calculatePrice(@RequestParam("plate") String plate,
+                                               @RequestParam("checkinDate") String checkinDate,
+                                               @RequestParam("checkinHour") String checkinHour,
+                                               @RequestParam("repair") List<String> repair,
+                                               @RequestParam("exitDate") String exitDate,
+                                               @RequestParam("exitHour") String exitHour,
+                                               @RequestParam("collectDate") String collectDate,
+                                               @RequestParam("collectHour") String collectHour) {
+        repairService.calculateMultipleTotalAmount(plate, checkinDate, checkinHour, repair,
                 exitDate, exitHour, collectDate, collectHour);
         return ResponseEntity.noContent().build();
     }
