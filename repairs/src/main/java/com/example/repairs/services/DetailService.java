@@ -36,6 +36,10 @@ public class DetailService {
         return detailAsList;
     }
 
+    public List<DetailEntity> getDetailsByRepair_Id(Long repair_id) {
+        return detailRepository.findByRepair_Id(repair_id);
+    }
+
     public List<DetailEntity> getDetailsByPlate(String plate) {
         return detailRepository.findByPlateLastYear(plate);
     }

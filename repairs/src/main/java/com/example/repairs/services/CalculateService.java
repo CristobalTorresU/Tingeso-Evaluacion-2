@@ -34,7 +34,6 @@ public class CalculateService {
 
     public double getBonusDiscount(BonusModel bonuses) {
         double bonusDiscount = 0.0;
-        // TODO: Verificar si cuando no se encuentra nada retorna null.
         if (bonuses != null) {
             if (bonuses.getQuantity() > 0) {
                 bonusDiscount = bonuses.getAmount();
@@ -48,8 +47,7 @@ public class CalculateService {
     public double getReparationsDiscount(String motor, int totalRepairs) {
         double repairsDiscount = 0.0;
 
-        // Conseguir la cantidad de reparaciones en el último año.
-
+        // Se verifica si el vehículo no tiene reparaciones.
         if (totalRepairs == 0) {
             return repairsDiscount;
         }
