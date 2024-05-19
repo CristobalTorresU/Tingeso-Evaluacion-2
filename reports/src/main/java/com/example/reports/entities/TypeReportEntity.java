@@ -17,7 +17,6 @@ public class TypeReportEntity {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    private int reparationType;
     private String repairName;
     private int quantity;
     private String type;

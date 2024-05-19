@@ -27,7 +27,6 @@ public class CalculateService {
                 price = repairList.getElectricAmount();
                 break;
         }
-        System.out.println("Precio de reparación: " + price);
 
         return price;
     }

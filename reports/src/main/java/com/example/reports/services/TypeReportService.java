@@ -1,9 +1,11 @@
 package com.example.reports.services;
 
 import com.example.reports.entities.TypeReportEntity;
+import com.example.reports.models.DetailModel;
 import com.example.reports.repositories.TypeReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,40 +14,30 @@ import java.util.List;
 public class TypeReportService {
     @Autowired
     TypeReportRepository typeReportRepository;
-    /*
     @Autowired
-    VehicleService vehicleService;
-    @Autowired
-    RepairService repairService;
-     */
+    RestTemplate restTemplate;
 
     public ArrayList<TypeReportEntity> getTypeReports() {
         return (ArrayList<TypeReportEntity>) typeReportRepository.findAll();
     }
 
-    public void makeBlankReport() {
+    // TODO: Hacer que solo entregue el string con el tipo de vehiculo.
+    public String getDetail(Long id) {
+        DetailModel detail = restTemplate.getForObject("http://details:8080/api/details/" + id, DetailModel.class);
+        return detail.getRepairType();
+    }
+
+    public void makeBlankReport(List<String> repairs) {
+        // Se eliminan todos los registros de la tabla.
         typeReportRepository.deleteAll();
 
-        String[] repairNames = {"Reparaciones del Sistema de Frenos",
-                "Servicio del Sistema de Refrigeración",
-                "Reparaciones del Motor",
-                "Reparaciones de la Transmisión",
-                "Reparación del Sistema Eléctrico",
-                "Reparaciones del Sistema de Escape",
-                "Reparación de Neumáticos y Ruedas",
-                "Reparaciones de la Suspensión y la Dirección",
-                "Reparación del Sistema de Aire Acondicionado y Calefacción",
-                "Reparaciones del Sistema de Combustible",
-                "Reparación y Reemplazo del Parabrisas y Cristales"};
-        String[] types = {"Sedán","Hatchback","SUV","Pickup","Furgoneta"};
-
-        // Genera cada combinacion
-        for (int i = 1 ; i <= 11 ; i++) {
-            for (int j = 0 ; j < 5 ; j++) {
+        // Se crean los nuevos registros en blanco en la tabla.
+        String[] types = {"Sedán", "Hatchback", "SUV", "Pickup", "Furgoneta"};
+        for (int j = 0 ; j < repairs.size(); j++) {
+            for (int i = 0; i < 5; i++) {
                 TypeReportEntity report = new TypeReportEntity();
-                report.setRepairName(repairNames[i-1]);
-                report.setReparationType(i);
-                report.setType(types[j]);
+                report.setRepairName(repairs.get(j));
+                report.setType(types[i]);
                 report.setQuantity(0);
                 report.setTotalAmount(0);
 
@@ -54,24 +46,26 @@ public class TypeReportService {
         }
     }
 
-    /*
-    public List<TypeReportEntity> makeReport() {
-        // Se traen todas las reparaciones
-        List<RepairEntity> repairs = repairService.getRepairs();
-
-        // Se revisan todas y se asignan a algun typeReport
-        for (RepairEntity repair : repairs) {
-            TypeReportEntity report = typeReportRepository.findByReparationTypeAndType(repair.getReparationType(),vehicleService.getVehicleByPlate(repair.getPlate()).getType());
-            report.setQuantity(report.getQuantity() + 1);
-            report.setTotalAmount(report.getTotalAmount() + repair.getTotalAmount());
-            typeReportRepository.save(report);
-        }
-
-        List<TypeReportEntity> typeReports = typeReportRepository.findAll();
-
-        return typeReports;
+    public void addToReport(int amount, String repairName, String type) {
+        TypeReportEntity report = typeReportRepository.findByRepairNameAndType(repairName, type);
+        report.setQuantity(report.getQuantity() + 1);
+        report.setTotalAmount(report.getTotalAmount() + amount);
+        typeReportRepository.save(report);
     }
-    */
+
+    // TODO: Verificar que esto funcione siquiera.
+    public List<DetailModel> getDetailsByMonthAndYear(int month, int year) {
+        return restTemplate.getForObject("http://repairs:8091/api/details/month/" + month + "/year/" + year, List.class);
+    }
+
+    public void makeReport(int month, int year) {
+        List<DetailModel> details = getDetailsByMonthAndYear(month, year);
+        for (int i = 0; i < details.size(); i++) {
+            // TODO: Hacer que pueda enviar el tipo de vehiculo de alguna forma.
+            details.get(i);
+            addToReport(details.get(i).getAmount(), details.get(i).getRepairType(), );
+        }
+    }
 
     public List<TypeReportEntity> getTypeOrdered() {
         return typeReportRepository.orderByTotalAmount();

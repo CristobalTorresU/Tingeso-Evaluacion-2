@@ -47,7 +47,7 @@ public class RepairListController {
 
     @PostMapping("/")
     public ResponseEntity<RepairListEntity> saveRepairList(@RequestBody RepairListEntity repair) {
-        RepairListEntity repairNew = repairListService.saveRepairList(repair);
+        RepairListEntity repairNew = repairListService.saveAndSendRepairList(repair);
         return ResponseEntity.ok(repairNew);
     }
 }

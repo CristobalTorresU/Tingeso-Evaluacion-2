@@ -1,18 +1,16 @@
 package com.example.reports.controllers;
 
 import com.example.reports.entities.TypeReportEntity;
+import com.example.reports.models.DetailModel;
 import com.example.reports.services.TypeReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/typereports")
+@RequestMapping("/api/type-reports")
 @CrossOrigin("*")
 public class TypeReportController {
     @Autowired
@@ -36,6 +34,13 @@ public class TypeReportController {
     @GetMapping("/ordered")
     public ResponseEntity<List<TypeReportEntity>> orderedTypeReports() {
         List<TypeReportEntity> reports = typeReportService.getTypeOrdered();
+        return ResponseEntity.ok(reports);
+    }
+
+    @GetMapping("/details/month/{month}/year/{year}")
+    public ResponseEntity<List<DetailModel>> getDetailsByMonthAndYear(@PathVariable int month,
+                                                                      @PathVariable int year) {
+        List<DetailModel> reports = typeReportService.getDetailsByMonthAndYear(month, year);
         return ResponseEntity.ok(reports);
     }
 }

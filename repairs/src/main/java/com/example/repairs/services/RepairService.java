@@ -84,10 +84,6 @@ public class RepairService {
 
         RepairListModel repairList = getRepairList(repairName);
 
-        // DEBUG
-        System.out.println("Motor: " + vehicle.getMotor());
-        System.out.println("Reparacion: " + repairList.getGasolineAmount());
-
         int totalPrice;
         double reparations = calculateService.getReparationTypePrice(vehicle.getMotor(), repairList);
         double mileageRecharges = reparations * calculateService.getMileageRecharge(vehicle.getType(), vehicle.getMileage());

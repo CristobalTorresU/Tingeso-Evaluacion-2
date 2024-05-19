@@ -4,6 +4,7 @@ import com.example.repairslist.entities.RepairListEntity;
 import com.example.repairslist.repositories.RepairListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 public class RepairListService {
     @Autowired
     RepairListRepository repairListRepository;
+    @Autowired
+    RestTemplate restTemplate;
 
     public ArrayList<RepairListEntity> getRepairsList() {
         return (ArrayList<RepairListEntity>) repairListRepository.findAll();
@@ -28,6 +31,10 @@ public class RepairListService {
         return repairListRepository.save(repairList);
     }
 
+    public RepairListEntity saveAndSendRepairList(RepairListEntity repairList) {
+        return repairListRepository.save(repairList);
+    }
+
     public boolean deleteRepairList(Long id) throws Exception {
         try{
             repairListRepository.deleteById(id);
@@ -36,4 +43,6 @@ public class RepairListService {
             throw new Exception(e.getMessage());
         }
     }
+
+
 }
