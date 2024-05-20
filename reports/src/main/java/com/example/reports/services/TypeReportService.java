@@ -4,6 +4,8 @@ import com.example.reports.entities.TypeReportEntity;
 import com.example.reports.models.DetailModel;
 import com.example.reports.repositories.TypeReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,12 +21,6 @@ public class TypeReportService {
 
     public ArrayList<TypeReportEntity> getTypeReports() {
         return (ArrayList<TypeReportEntity>) typeReportRepository.findAll();
-    }
-
-    // TODO: Hacer que solo entregue el string con el tipo de vehiculo.
-    public String getDetail(Long id) {
-        DetailModel detail = restTemplate.getForObject("http://details:8080/api/details/" + id, DetailModel.class);
-        return detail.getRepairType();
     }
 
     public void makeBlankReport(List<String> repairs) {
@@ -53,18 +49,26 @@ public class TypeReportService {
         typeReportRepository.save(report);
     }
 
-    // TODO: Verificar que esto funcione siquiera.
     public List<DetailModel> getDetailsByMonthAndYear(int month, int year) {
-        return restTemplate.getForObject("http://repairs:8091/api/details/month/" + month + "/year/" + year, List.class);
+        ParameterizedTypeReference<List<DetailModel>> responseType = new ParameterizedTypeReference<List<DetailModel>>() {};
+        return restTemplate.exchange("http://repairs:8091/api/details/month/" + month + "/year/" + year, HttpMethod.GET, null, responseType).getBody();
+    }
+
+    public String getType(String plate) {
+        return restTemplate.getForObject("http://repairs:8091/api/details/vehicles/type/" + plate, String.class);
     }
 
     public void makeReport(int month, int year) {
         List<DetailModel> details = getDetailsByMonthAndYear(month, year);
         for (int i = 0; i < details.size(); i++) {
-            // TODO: Hacer que pueda enviar el tipo de vehiculo de alguna forma.
-            details.get(i);
-            addToReport(details.get(i).getAmount(), details.get(i).getRepairType(), );
+            String type = getType(details.get(i).getPlate());
+            addToReport(details.get(i).getAmount(), details.get(i).getRepairType(), type);
         }
+    }
+
+    public List<String> getRepairNames() {
+        ParameterizedTypeReference<List<String>> responseType = new ParameterizedTypeReference<List<String>>() {};
+        return restTemplate.exchange("http://repairs:8091/api/details/repair-list/list", HttpMethod.GET, null, responseType).getBody();
     }
 
     public List<TypeReportEntity> getTypeOrdered() {

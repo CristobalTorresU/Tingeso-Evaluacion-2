@@ -22,14 +22,13 @@ public class TypeReportController {
         return ResponseEntity.ok(typeReports);
     }
 
-    /*
     @GetMapping("/generate")
-    public ResponseEntity<List<TypeReportEntity>> bringTypeReports() {
-        typeReportService.makeBlankReport();
-        List<TypeReportEntity> reports = typeReportService.makeReport();
-        return ResponseEntity.ok(reports);
+    public ResponseEntity<Void> bringTypeReports(@RequestParam("month") int month, @RequestParam("year") int year) {
+        List<String> repairNames = typeReportService.getRepairNames();
+        typeReportService.makeBlankReport(repairNames);
+        typeReportService.makeReport(month, year);
+        return ResponseEntity.noContent().build();
     }
-    */
 
     @GetMapping("/ordered")
     public ResponseEntity<List<TypeReportEntity>> orderedTypeReports() {

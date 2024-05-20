@@ -1,9 +1,12 @@
 package com.example.repairs.services;
 
 import com.example.repairs.entities.DetailEntity;
+import com.example.repairs.models.RepairListModel;
 import com.example.repairs.models.VehicleModel;
 import com.example.repairs.repositories.DetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,12 +39,6 @@ public class DetailService {
         return detailAsList;
     }
 
-    /*
-    public List<DetailEntity> getDetailsByRepair_Id(Long repair_id) {
-        return detailRepository.findByRepair_Id(repair_id);
-    }
-    */
-
     public List<DetailEntity> getDetailsByPlate(String plate) {
         return detailRepository.findByPlateLastYear(plate);
     }
@@ -50,9 +47,22 @@ public class DetailService {
         return restTemplate.getForObject("http://vehicles:8090/api/vehicles/by-plate/" + plate, VehicleModel.class);
     }
 
-    // TODO: Verificar que esto funcione de alguna forma.
     public String getVehicleType(String plate) {
-        VehicleModel vehicle = restTemplate.getForObject("http://vehicles:8090/api/vehicles/by-plate/" + plate, VehicleModel.class);
-        return vehicle.getType();
+        return restTemplate.getForObject("http://vehicles:8090/api/vehicles/by-plate/" + plate, VehicleModel.class).getType();
+    }
+
+    public List<String> getRepairTypes() {
+        ParameterizedTypeReference<List<RepairListModel>> responseType = new ParameterizedTypeReference<List<RepairListModel>>() {};
+        List<RepairListModel> repairTypes = restTemplate.exchange("http://repairs-list:8092/api/repair-list/", HttpMethod.GET, null, responseType).getBody();
+        List<String> repairNames = new ArrayList<>();
+        for (RepairListModel repairType : repairTypes) {
+            repairNames.add(repairType.getRepairName());
+        }
+
+        return repairNames;
+    }
+
+    public List<DetailEntity> getByMonthAndYear(int month, int year) {
+        return detailRepository.findByMonthAndYear(month, year);
     }
 }

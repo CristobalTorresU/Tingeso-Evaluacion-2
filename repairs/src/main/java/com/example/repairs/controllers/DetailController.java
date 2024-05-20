@@ -28,17 +28,28 @@ public class DetailController {
         return ResponseEntity.ok(detail);
     }
 
-    /*
-    @GetMapping("/by-repair-id/{repair_id}")
-    public ResponseEntity<List<DetailEntity>> getDetailsByRepair_Id(@PathVariable Long repair_id) {
-        List<DetailEntity> details = detailService.getDetailsByRepair_Id(repair_id);
-        return ResponseEntity.ok(details);
+    @GetMapping("/repair-list/list")
+    public ResponseEntity<List<String>> getRepairTypes() {
+        List<String> repairTypes = detailService.getRepairTypes();
+        return ResponseEntity.ok(repairTypes);
     }
-     */
 
     @GetMapping("/vehicles/{plate}")
     public ResponseEntity<VehicleModel> getVehicle(@PathVariable String plate) {
         VehicleModel vehicle = detailService.getVehicle(plate);
         return ResponseEntity.ok(vehicle);
+    }
+
+    @GetMapping("/vehicles/type/{plate}")
+    public ResponseEntity<String> getVehicleType(@PathVariable String plate) {
+        String type = detailService.getVehicleType(plate);
+        return ResponseEntity.ok(type);
+    }
+
+    @GetMapping("/month/{month}/year/{year}")
+    public ResponseEntity<List<DetailEntity>> getDetailsByMonthAndYear(@PathVariable int month,
+                                                                      @PathVariable int year) {
+        List<DetailEntity> details = detailService.getByMonthAndYear(month, year);
+        return ResponseEntity.ok(details);
     }
 }

@@ -51,82 +51,9 @@ public class RepairService {
         return restTemplate.getForObject("http://bonuses:8094/api/bonuses/by-brand/" + brand, BonusModel.class);
     }
 
-    // TODO: Verificar si funciona el formato del string en la URL utilizando espacios y tildes.
     public RepairListModel getRepairList(String repair) {
         return restTemplate.getForObject("http://repairs-list:8092/api/repair-list/by-repair/" + repair, RepairListModel.class);
     }
-
-    // Single Repair Version
-    /*
-    public boolean calculateTotalAmount(String plate,
-                                        String checkinDateString,
-                                        String checkinHourString,
-                                        String repairName,
-                                        String exitDateString,
-                                        String exitHourString,
-                                        String collectDateString,
-                                        String collectHourString) {
-        // Formatear Fechas
-        LocalDate checkinDate = LocalDate.parse(checkinDateString);
-        LocalDate exitDate = LocalDate.parse(exitDateString);
-        LocalDate collectDate = LocalDate.parse(collectDateString);
-
-        // Formatear Horas
-        LocalTime checkinHour = LocalTime.parse(checkinHourString);
-        LocalTime exitHour = LocalTime.parse(exitHourString);
-        LocalTime collectHour = LocalTime.parse(collectHourString);
-
-        RepairEntity repair = new RepairEntity();
-        DetailEntity detail = new DetailEntity();
-
-        VehicleModel vehicle = detailService.getVehicle(plate);
-        BonusModel bonuses = getBonus(vehicle.getBrand());
-
-        RepairListModel repairList = getRepairList(repairName);
-
-        int totalPrice;
-        double reparations = calculateService.getReparationTypePrice(vehicle.getMotor(), repairList);
-        double mileageRecharges = reparations * calculateService.getMileageRecharge(vehicle.getType(), vehicle.getMileage());
-        double yearRecharge = reparations * calculateService.getYearRecharge(vehicle.getType(), vehicle.getYear(), checkinDate);
-        double lateRecharge = reparations * calculateService.getLateRecharge(exitDate, collectDate);
-        double reparationDiscounts = reparations * calculateService.getReparationsDiscount(vehicle.getMotor(),
-                detailService.getDetailsByPlate(plate).size());
-        double dayDiscount = reparations * calculateService.getDayDiscount(checkinDate, checkinHour);
-        double bonusDiscount = calculateService.getBonusDiscount(bonuses);
-
-        int discounts = (int)reparationDiscounts + (int)dayDiscount + (int)bonusDiscount;
-        int recharges = (int)mileageRecharges + (int)yearRecharge + (int)lateRecharge;
-        int iva = (int)(reparations * 0.19);
-
-        totalPrice = ((int)reparations + recharges - discounts) + iva;
-
-        // Atributos para la reparacion
-        repair.setCheckinDate(checkinDate);
-        repair.setCheckinHour(checkinHour);
-        repair.setExitDate(exitDate);
-        repair.setExitHour(exitHour);
-        repair.setCollectDate(collectDate);
-        repair.setCollectHour(collectHour);
-        repair.setTotalAmount(totalPrice);
-        repair.setIva(iva);
-        repair.setDiscountsAmount(discounts);
-        repair.setRechargesAmount(recharges);
-
-        // Atributos para el detalle
-        detail.setPlate(plate);
-        detail.setRepairType(repairName);
-        detail.setDate(checkinDate);
-        detail.setHour(checkinHour);
-        detail.setAmount(totalPrice);
-
-        repairRepository.save(repair);
-
-        detail.setRepair_id(repair.getId());
-        detailService.saveDetail(detail);
-
-        return true;
-    }
-    */
 
     // Multiple Repairs Version
     public boolean calculateMultipleTotalAmount(String plate,
