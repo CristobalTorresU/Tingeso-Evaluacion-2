@@ -10,6 +10,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,4 +67,13 @@ public class DetailService {
     public List<DetailEntity> getByMonthAndYear(int month, int year) {
         return detailRepository.findByMonthAndYear(month, year);
     }
+
+    /*
+    public List<DetailEntity> getByMonthAndYearAndPreviousMonths(int month, int year) {
+        YearMonth yearMonth = YearMonth.of(year, month);
+        LocalDate startDate = yearMonth.minusMonths(3).atDay(1);
+        LocalDate endDate = yearMonth.atEndOfMonth();
+        return detailRepository.findByMonthAndYearAndPreviousMonths(startDate, endDate);
+    }
+    */
 }

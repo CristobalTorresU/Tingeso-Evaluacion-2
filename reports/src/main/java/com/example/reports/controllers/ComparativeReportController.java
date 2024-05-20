@@ -4,10 +4,7 @@ import com.example.reports.entities.ComparativeReportEntity;
 import com.example.reports.services.ComparativeReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +19,15 @@ public class ComparativeReportController {
     public ResponseEntity<List<ComparativeReportEntity>> listComparativeReports() {
         List<ComparativeReportEntity> comparativeReports = comparativeReportService.getComparativeReports();
         return ResponseEntity.ok(comparativeReports);
+    }
+
+    // TODO: VERIFICAR QUE ESTO FUNCIONE.
+    @GetMapping("/generate")
+    public ResponseEntity<Void> bringComparativeReports(@RequestParam("month") int month, @RequestParam("year") int year) {
+        List<String> repairNames = comparativeReportService.getRepairNames();
+        comparativeReportService.makeBlankReport(repairNames);
+        comparativeReportService.makeReport(month, year);
+        comparativeReportService.calculateVariations();
+        return ResponseEntity.noContent().build();
     }
 }
