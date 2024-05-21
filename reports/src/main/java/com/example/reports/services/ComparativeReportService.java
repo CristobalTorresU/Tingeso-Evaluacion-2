@@ -96,14 +96,30 @@ public class ComparativeReportService {
         List<ComparativeReportEntity> reports = getComparativeReports();
         for (int i = 0 ; i < reports.size() ; i++) {
             ComparativeReportEntity report = reports.get(i);
-            report.setVariationQ1((report.getQuantity1() * 100) / report.getQuantityNow());
-            report.setVariationQ2((report.getQuantity2() * 100) / report.getQuantityNow());
-            report.setVariationQ3((report.getQuantity3() * 100) / report.getQuantityNow());
-            report.setVariationA1((report.getAmount1() * 100) / report.getAmountNow());
-            report.setVariationA2((report.getAmount2() * 100) / report.getAmountNow());
-            report.setVariationA3((report.getAmount3() * 100) / report.getAmountNow());
+            /*
+            report.setVariationQ1(equation(report.getQuantity1(), report.getQuantityNow()));
+            report.setVariationQ2(equation(report.getQuantity2(), report.getQuantityNow()));
+            report.setVariationQ3(equation(report.getQuantity3(), report.getQuantityNow()));
+            report.setVariationA1(equation(report.getAmount1(), report.getAmountNow()));
+            report.setVariationA2(equation(report.getAmount2(), report.getAmountNow()));
+            report.setVariationA3(equation(report.getAmount3(), report.getAmountNow()));
+            */
+            report.setVariationQ1(equation(report.getQuantityNow(), report.getQuantity1()));
+            report.setVariationQ2(equation(report.getQuantityNow(), report.getQuantity2()));
+            report.setVariationQ3(equation(report.getQuantityNow(), report.getQuantity3()));
+            report.setVariationA1(equation(report.getAmountNow(), report.getAmount1()));
+            report.setVariationA2(equation(report.getAmountNow(), report.getAmount2()));
+            report.setVariationA3(equation(report.getAmountNow(), report.getAmount3()));
+
             comparativeReportRepository.save(report);
         }
+    }
+
+    public int equation(int qa , int qaNow) {
+        if (qaNow == 0) {
+            return qa * 100;
+        }
+        return (qa * 100) / qaNow;
     }
 
     public List<DetailModel> getDetailsByMonthAndYear(int month, int year) {

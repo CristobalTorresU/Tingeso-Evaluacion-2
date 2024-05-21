@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comparativereports")
+@RequestMapping("/api/comparative-reports")
 @CrossOrigin("*")
 public class ComparativeReportController {
     @Autowired
@@ -28,6 +28,7 @@ public class ComparativeReportController {
         comparativeReportService.makeBlankReport(repairNames);
         comparativeReportService.makeReport(month, year);
         comparativeReportService.calculateVariations();
+        System.out.println("owo");
         return ResponseEntity.noContent().build();
     }
 }
