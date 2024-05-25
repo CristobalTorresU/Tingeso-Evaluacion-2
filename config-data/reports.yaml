@@ -7,7 +7,7 @@ spring:
     password: 1234
 eureka:
   instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    preferIPAddress: true
   client:
     fetch-registry: true
     register-with-eureka: true
