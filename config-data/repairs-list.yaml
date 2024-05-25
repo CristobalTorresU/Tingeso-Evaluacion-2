@@ -7,7 +7,7 @@ spring:
     password: 1234
 eureka:
   instance:
-    hostname: localhost
+    hostname: repairs-list
   client:
     fetch-registry: true
     register-with-eureka: true
