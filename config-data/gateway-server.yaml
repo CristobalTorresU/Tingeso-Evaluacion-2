@@ -22,22 +22,22 @@ spring:
             allowedHeaders: "*"
       routes:
         - id: vehicles
-          uri: lb://vehicles:8090
+          uri: lb://vehicles
           predicates:
             - Path=/api/vehicles/**
         - id: repairs
-          uri: lb://repairs:8091
+          uri: lb://repairs
           predicates:
             - Path=/api/repairs/**
         - id: repairs-list
-          uri: lb://repairs-list:8092
+          uri: lb://repairs-list
           predicates:
             - Path=/api/repair-list/**
         - id: reports
-          uri: lb://reports:8093
+          uri: lb://reports
           predicates:
             - Path=/api/reports/**
         - id: bonuses
-          uri: lb://bonuses:8094
+          uri: lb://bonuses
           predicates:
             - Path=/api/bonuses/**

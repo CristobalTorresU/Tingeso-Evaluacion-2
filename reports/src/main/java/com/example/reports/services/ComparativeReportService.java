@@ -92,18 +92,11 @@ public class ComparativeReportService {
         }
     }
 
+    // TODO: Probar con 5 meses de reparaciones.
     public void calculateVariations() {
         List<ComparativeReportEntity> reports = getComparativeReports();
         for (int i = 0 ; i < reports.size() ; i++) {
             ComparativeReportEntity report = reports.get(i);
-            /*
-            report.setVariationQ1(equation(report.getQuantity1(), report.getQuantityNow()));
-            report.setVariationQ2(equation(report.getQuantity2(), report.getQuantityNow()));
-            report.setVariationQ3(equation(report.getQuantity3(), report.getQuantityNow()));
-            report.setVariationA1(equation(report.getAmount1(), report.getAmountNow()));
-            report.setVariationA2(equation(report.getAmount2(), report.getAmountNow()));
-            report.setVariationA3(equation(report.getAmount3(), report.getAmountNow()));
-            */
             report.setVariationQ1(equation(report.getQuantityNow(), report.getQuantity1()));
             report.setVariationQ2(equation(report.getQuantityNow(), report.getQuantity2()));
             report.setVariationQ3(equation(report.getQuantityNow(), report.getQuantity3()));

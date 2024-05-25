@@ -2,7 +2,9 @@ package com.example.repairs.services;
 
 import com.example.repairs.models.BonusModel;
 import com.example.repairs.models.RepairListModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -10,6 +12,9 @@ import java.time.LocalTime;
 
 @Service
 public class CalculateService {
+    @Autowired
+    RestTemplate restTemplate;
+
     public double getReparationTypePrice(String motor, RepairListModel repairList) {
         double price = 0.0;
 
@@ -38,6 +43,9 @@ public class CalculateService {
             if (bonuses.getQuantity() > 0) {
                 bonusDiscount = bonuses.getAmount();
                 bonuses.setQuantity(bonuses.getQuantity() - 1);
+                /*
+                restTemplate.put("http://localhost:8082/api/bonuses/", bonuses);
+                */
             }
         }
 
