@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repairs-list-deployment
+  labels:
+    app: repairs-list-deployment
+spec:
+  selector:
+    matchLabels:
+      app: repairs-list-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: repairs-list-deployment
+    spec:
+      containers:
+        - name: repairs-list
+          image: dilget/repairs-list
+          ports:
+            - containerPort: 8092
+          env:
+            - name: SERVER_PORT
+              value: "8092"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_HOST_REPAIRS_LIST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PORT_REPAIRS_LIST
+            - name: DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_NAME_REPAIRS_LIST
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER_REPAIRS_LIST
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD_REPAIRS_LIST
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: repairs-list-service
+  labels:
+    app: repairs-list-service
+spec:
+  selector:
+    app: repairs-list-deployment
+  ports:
+    - protocol: TCP
+      port: 8092
+      targetPort: 8092
+  type: LoadBalancer

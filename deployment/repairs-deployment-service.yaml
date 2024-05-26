@@ -15,37 +15,38 @@ spec:
         app: repairs-deployment
     spec:
       containers:
-        - name: repairs-service
-          image: dilget/repairs-service:latest
+        - name: repairs
+          image: dilget/repairs
           ports:
-            - containerPort: 8081
+            - containerPort: 8091
           env:
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: http://config-service:8081
-            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-              value: http://eureka-service:8761
-            - name: eureka.instance.preferIpAddress
-              value: "true"
-            - name: MYSQL_DB_HOST
+            - name: SERVER_PORT
+              value: "8091"
+            - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: mysql-config-map
-                  key: MYSQL_DB_HOST
-            - name: MYSQL_DB_ESTUDIANTES
+                  name: postgres-config-map
+                  key: DB_HOST_REPAIRS
+            - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: mysql-config-map
-                  key: MYSQL_DB_ESTUDIANTES
-            - name: MYSQL_USER
+                  name: postgres-config-map
+                  key: DB_PORT_REPAIRS
+            - name: DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_NAME_REPAIRS
+            - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: mysql-credentials
-                  key: MYSQL_USER
-            - name: MYSQL_PASSWORD
+                  name: postgres-credentials
+                  key: DB_USER_REPAIRS
+            - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-credentials
-                  key: MYSQL_PASSWORD
+                  name: postgres-credentials
+                  key: DB_PASSWORD_REPAIRS
 ---
 apiVersion: v1
 kind: Service
@@ -58,6 +59,6 @@ spec:
     app: repairs-deployment
   ports:
     - protocol: TCP
-      port: 8083
-      targetPort: 8083
+      port: 8091
+      targetPort: 8091
   type: LoadBalancer

@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reports-deployment
+  labels:
+    app: reports-deployment
+spec:
+  selector:
+    matchLabels:
+      app: reports-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: reports-deployment
+    spec:
+      containers:
+        - name: reports
+          image: dilget/reports
+          ports:
+            - containerPort: 8091
+          env:
+            - name: SERVER_PORT
+              value: "8091"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_HOST_REPORTS
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PORT_REPORTS
+            - name: DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_NAME_REPORTS
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER_REPORTS
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD_REPORTS
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reports-service
+  labels:
+    app: reports-service
+spec:
+  selector:
+    app: reports-deployment
+  ports:
+    - protocol: TCP
+      port: 8093
+      targetPort: 8093
+  type: LoadBalancer

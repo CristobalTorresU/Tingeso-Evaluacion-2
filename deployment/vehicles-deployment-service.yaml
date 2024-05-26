@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicles-deployment
+  labels:
+    app: vehicles-deployment
+spec:
+  selector:
+    matchLabels:
+      app: vehicles-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vehicles-deployment
+    spec:
+      containers:
+        - name: vehicles
+          image: dilget/vehicles
+          ports:
+            - containerPort: 8093
+          env:
+            - name: SERVER_PORT
+              value: "8093"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_HOST_VEHICLES
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PORT_VEHICLES
+            - name: DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_NAME_VEHICLES
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER_VEHICLES
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD_VEHICLES
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vehicles-service
+  labels:
+    app: vehicles-service
+spec:
+  selector:
+    app: vehicles-deployment
+  ports:
+    - protocol: TCP
+      port: 8090
+      targetPort: 8090
+  type: LoadBalancer
