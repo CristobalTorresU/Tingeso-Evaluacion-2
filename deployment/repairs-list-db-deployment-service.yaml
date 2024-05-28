@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: repairs-list-db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/repairs-list-db-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: repairs-list-db-pvc
+  labels:
+    app: postgres
+    tier: database
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repairs-list-db-deployment
+  labels:
+    app: repairs-list-db-deployment
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: repairs-list-db-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: repairs-list-db-deployment
+        tier: database
+    spec:
+      containers:
+        - name: repairs-list-db
+          image: postgres
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER_REPAIRS_LIST
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD_REPAIRS_LIST
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: repairs-list-db-data
+      volumes:
+        - name: repairs-list-db-data
+          persistentVolumeClaim:
+            claimName: repairs-list-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: repairs-list-db-service
+  labels:
+    app: repairs-list-db-service
+    tier: database
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    app: repairs-list-db-deployment
+    tier: database
+  type: LoadBalancer
