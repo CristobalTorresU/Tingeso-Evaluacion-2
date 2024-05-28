@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: repairs
-          image: dilget/repairs
+          image: dilget/bonuses
           ports:
             - containerPort: 8094
           env:

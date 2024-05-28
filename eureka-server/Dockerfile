@@ -1,4 +1,4 @@
 FROM openjdk:17
 ARG JAR_FILE=./target/*.jar
-COPY ${JAR_FILE} config-service.jar
-ENTRYPOINT ["java","-jar","/config-service.jar"]
+COPY ${JAR_FILE} eureka-server.jar
+ENTRYPOINT ["java","-jar","/eureka-server.jar"]
