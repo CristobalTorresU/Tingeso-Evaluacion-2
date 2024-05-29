@@ -51,11 +51,11 @@ public class TypeReportService {
 
     public List<DetailModel> getDetailsByMonthAndYear(int month, int year) {
         ParameterizedTypeReference<List<DetailModel>> responseType = new ParameterizedTypeReference<List<DetailModel>>() {};
-        return restTemplate.exchange("http://repairs:8091/api/details/month/" + month + "/year/" + year, HttpMethod.GET, null, responseType).getBody();
+        return restTemplate.exchange("http://repairs/api/repairs/details/month/" + month + "/year/" + year, HttpMethod.GET, null, responseType).getBody();
     }
 
     public String getType(String plate) {
-        return restTemplate.getForObject("http://repairs:8091/api/details/vehicles/type/" + plate, String.class);
+        return restTemplate.getForObject("http://repairs/api/details/vehicles/type/" + plate, String.class);
     }
 
     public void makeReport(int month, int year) {
@@ -68,7 +68,7 @@ public class TypeReportService {
 
     public List<String> getRepairNames() {
         ParameterizedTypeReference<List<String>> responseType = new ParameterizedTypeReference<List<String>>() {};
-        return restTemplate.exchange("http://repairs:8091/api/details/repair-list/list", HttpMethod.GET, null, responseType).getBody();
+        return restTemplate.exchange("http://repairs/api/details/repair-list/list", HttpMethod.GET, null, responseType).getBody();
     }
 
     public List<TypeReportEntity> getTypeOrdered() {

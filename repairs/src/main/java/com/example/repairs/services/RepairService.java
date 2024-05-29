@@ -48,11 +48,11 @@ public class RepairService {
     }
 
     public BonusModel getBonus(String brand) {
-        return restTemplate.getForObject("http://bonuses:8094/api/bonuses/by-brand/" + brand, BonusModel.class);
+        return restTemplate.getForObject("http://bonuses/api/bonuses/by-brand/" + brand, BonusModel.class);
     }
 
     public RepairListModel getRepairList(String repair) {
-        return restTemplate.getForObject("http://repairs-list:8092/api/repair-list/by-repair/" + repair, RepairListModel.class);
+        return restTemplate.getForObject("http://repairs-list/api/repair-list/by-repair/" + repair, RepairListModel.class);
     }
 
     // Multiple Repairs Version

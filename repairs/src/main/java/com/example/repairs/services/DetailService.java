@@ -46,16 +46,16 @@ public class DetailService {
     }
 
     public VehicleModel getVehicle(String plate) {
-        return restTemplate.getForObject("http://vehicles:8090/api/vehicles/by-plate/" + plate, VehicleModel.class);
+        return restTemplate.getForObject("http://vehicles/api/vehicles/by-plate/" + plate, VehicleModel.class);
     }
 
     public String getVehicleType(String plate) {
-        return restTemplate.getForObject("http://vehicles:8090/api/vehicles/by-plate/" + plate, VehicleModel.class).getType();
+        return restTemplate.getForObject("http://vehicles/api/vehicles/by-plate/" + plate, VehicleModel.class).getType();
     }
 
     public List<String> getRepairTypes() {
         ParameterizedTypeReference<List<RepairListModel>> responseType = new ParameterizedTypeReference<List<RepairListModel>>() {};
-        List<RepairListModel> repairTypes = restTemplate.exchange("http://repairs-list:8092/api/repair-list/", HttpMethod.GET, null, responseType).getBody();
+        List<RepairListModel> repairTypes = restTemplate.exchange("http://repairs-list/api/repair-list/", HttpMethod.GET, null, responseType).getBody();
         List<String> repairNames = new ArrayList<>();
         for (RepairListModel repairType : repairTypes) {
             repairNames.add(repairType.getRepairName());
@@ -67,13 +67,4 @@ public class DetailService {
     public List<DetailEntity> getByMonthAndYear(int month, int year) {
         return detailRepository.findByMonthAndYear(month, year);
     }
-
-    /*
-    public List<DetailEntity> getByMonthAndYearAndPreviousMonths(int month, int year) {
-        YearMonth yearMonth = YearMonth.of(year, month);
-        LocalDate startDate = yearMonth.minusMonths(3).atDay(1);
-        LocalDate endDate = yearMonth.atEndOfMonth();
-        return detailRepository.findByMonthAndYearAndPreviousMonths(startDate, endDate);
-    }
-    */
 }

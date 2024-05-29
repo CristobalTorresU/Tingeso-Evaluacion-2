@@ -117,11 +117,11 @@ public class ComparativeReportService {
 
     public List<DetailModel> getDetailsByMonthAndYear(int month, int year) {
         ParameterizedTypeReference<List<DetailModel>> responseType = new ParameterizedTypeReference<List<DetailModel>>() {};
-        return restTemplate.exchange("http://repairs:8091/api/details/month/" + month + "/year/" + year, HttpMethod.GET, null, responseType).getBody();
+        return restTemplate.exchange("http://repairs/api/repairs/details/month/" + month + "/year/" + year, HttpMethod.GET, null, responseType).getBody();
     }
 
     public List<String> getRepairNames() {
         ParameterizedTypeReference<List<String>> responseType = new ParameterizedTypeReference<List<String>>() {};
-        return restTemplate.exchange("http://repairs:8091/api/details/repair-list/list", HttpMethod.GET, null, responseType).getBody();
+        return restTemplate.exchange("http://repairs/api/details/repair-list/list", HttpMethod.GET, null, responseType).getBody();
     }
 }

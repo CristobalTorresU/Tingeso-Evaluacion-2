@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="repairs" />
         <module name="reports" />
-        <module name="config-server" />
         <module name="repairs-list" />
         <module name="vehicles" />
         <module name="gateway-server" />
@@ -17,6 +16,9 @@
         <module name="eureka-server" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="config-server" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
