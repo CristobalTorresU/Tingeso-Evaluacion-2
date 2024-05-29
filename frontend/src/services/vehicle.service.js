@@ -19,4 +19,5 @@ const update = data => {
 const remove = id => {
     return httpClient.delete(`/api/vehicles/${id}`);
 }
+
 export default { getAll, create, get, update, remove };

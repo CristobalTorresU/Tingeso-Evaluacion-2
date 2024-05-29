@@ -14,8 +14,6 @@ import AnalyticsIcon from "@mui/icons-material/Analytics";
 import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router-dom";
 import type_reportService from "../services/type_report.service";
-import time_reportService from "../services/time_report.service";
-import motor_reportService from "../services/motor_report.service";
 
 export default function Sidemenu({ open, toggleDrawer }) {
   const navigate = useNavigate();
@@ -71,6 +69,13 @@ export default function Sidemenu({ open, toggleDrawer }) {
           <ListItemText primary="Vehículos" />
         </ListItemButton>
 
+        <ListItemButton onClick={() => navigate("/repair-list/list")}>
+          <ListItemIcon>
+            <CarRepair />
+          </ListItemIcon>
+          <ListItemText primary="Lista de Reparaciones" />
+        </ListItemButton>
+
         <ListItemButton onClick={() => navigate("/repair/list")}>
           <ListItemIcon>
             <CarRepair />
@@ -96,23 +101,17 @@ export default function Sidemenu({ open, toggleDrawer }) {
 
       <Divider />
 
-        <ListItemButton onClick={() => navigate("/report/typeReport")}>
+        <ListItemButton onClick={() => navigate("/report/type-report")}>
           <ListItemIcon>
             <AnalyticsIcon />
           </ListItemIcon>
           <ListItemText primary="Reporte Por Tipo" />
         </ListItemButton>
-        <ListItemButton onClick={() => navigate("/report/timeReport")}>
+        <ListItemButton onClick={() => navigate("/report/comparative-report")}>
           <ListItemIcon>
             <AnalyticsIcon />
           </ListItemIcon>
-          <ListItemText primary="Reporte Por Tiempo" />
-        </ListItemButton>
-        <ListItemButton onClick={() => navigate("/report/motorReport")}>
-          <ListItemIcon>
-            <AnalyticsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Reporte Por Motor" />
+          <ListItemText primary="Reportes Comparativos" />
         </ListItemButton>
       </List>
     </Box>

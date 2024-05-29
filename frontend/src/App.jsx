@@ -10,10 +10,9 @@ import AddRepair from './components/RepairCalculate';
 import AvailableBonus from './components/AvailableBonus';
 import AddBonus from './components/AddBonus';
 import TypeReportList from './components/TypeReportList';
-import TimeReportList from './components/TimeReportList';
-import MotorReportList from './components/MotorReportList';
-import Testing from './components/Testing';
 import NotFound from './components/NotFound';
+import RepairListPrices from './components/RepairsListPrices';
+import RegisterRepairListPrices from './components/RegisterRepairsListPrices';
 
 function App() {
   return (
@@ -27,14 +26,13 @@ function App() {
           <Route path="/vehicle/edit/:id" element={<RegisterVehicle/>} />
           <Route path="/repair/list" element={<RepairList/>} />
           <Route path="/repair/details/:id" element={<RepairDetails/>} />
+          <Route path="/repair-list/list" element={<RepairListPrices/>} />
+          <Route path="/repair-list/register" element={<RegisterRepairListPrices/>} />
           <Route path="/repair/add" element={<AddRepair/>} />
           <Route path="/bonus/list" element={<AvailableBonus/>} />
           <Route path="/bonus/add" element={<AddBonus/>} />
           <Route path="/bonus/edit/:id" element={<AddBonus/>} />
-          <Route path="/report/typeReport" element={<TypeReportList/>} />
-          <Route path="/report/timeReport" element={<TimeReportList/>} />
-          <Route path="/report/motorReport" element={<MotorReportList/>} />
-          <Route path="/testing" element={<Testing/>} />
+          <Route path="/report/type-report" element={<TypeReportList/>} />
           <Route path="*" element={<NotFound/>} />
         </Routes>
       </div>

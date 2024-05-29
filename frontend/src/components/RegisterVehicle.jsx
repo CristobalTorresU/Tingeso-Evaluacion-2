@@ -6,7 +6,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import SaveIcon from "@mui/icons-material/Save";
-import { Grid, MenuItem } from "@mui/material";
 
 const RegisterVehicle = () => {
     const [plate, setPlate] = useState("");
