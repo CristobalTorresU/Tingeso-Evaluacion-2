@@ -1,15 +1,15 @@
 #!/bin/bash
 
-cd /Universidad/6/Tingeso/E2/Tingeso-Evaluacion-2/config-service/
+cd /home/diggy/Universidad/6/Tingeso/E2/Tingeso-Evaluacion-2/config-server/
 mvn clean install -DskipTests=True
-docker build -t dilget/config-service .
-docker push dilget/config-service
+docker build -t dilget/config-server .
+docker push dilget/config-server
 
 cd ..
 cd eureka-server/
 mvn clean install -DskipTests=True
-docker build -t dilget/eureka-service .
-docker push dilget/eureka-service
+docker build -t dilget/eureka-server .
+docker push dilget/eureka-server
 
 cd ..
 cd vehicles/
@@ -42,7 +42,7 @@ docker build -t dilget/bonuses:latest .
 docker push dilget/bonuses:latest
 
 cd ..
-cd gateway-service/
+cd gateway-server/
 mvn clean install -DskipTests=True
-docker build -t dilget/gateway-service .
-docker push dilget/gateway-service
+docker build -t dilget/gateway-server .
+docker push dilget/gateway-server
