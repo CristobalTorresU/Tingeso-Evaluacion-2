@@ -12,8 +12,8 @@ kubectl apply -f repairs-db-deployment-service.yaml
 kubectl apply -f repairs-list-db-deployment-service.yaml
 kubectl apply -f reports-db-deployment-service.yaml
 kubectl apply -f bonuses-db-deployment-service.yaml
+kubectl apply -f config-service-deployment-service.yaml
 
-#kubectl apply -f config-service-deployment-service.yaml
 #kubectl apply -f eureka-service-deployment-service.yaml
 #kubectl apply -f gateway-service-deployment-service.yaml
 #kubectl apply -f vehicles-deployment-service.yaml
