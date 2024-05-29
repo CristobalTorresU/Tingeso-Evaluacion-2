@@ -28,15 +28,6 @@ public class DetailController {
         return ResponseEntity.ok(detail);
     }
 
-    /*
-    @GetMapping("/previous-months/month/{month}/year/{year}")
-    public ResponseEntity<List<DetailEntity>> getPreviousMonths(@PathVariable int month,
-                                                                @PathVariable int year) {
-        List<DetailEntity> details = detailService.getByMonthAndYearAndPreviousMonths(month, year);
-        return ResponseEntity.ok(details);
-    }
-    */
-
     @GetMapping("/repair-list/list")
     public ResponseEntity<List<String>> getRepairTypes() {
         List<String> repairTypes = detailService.getRepairTypes();

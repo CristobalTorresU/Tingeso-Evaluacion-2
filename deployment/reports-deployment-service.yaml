@@ -18,10 +18,10 @@ spec:
         - name: reports
           image: dilget/reports
           ports:
-            - containerPort: 8091
+            - containerPort: 8093
           env:
             - name: SERVER_PORT
-              value: "8091"
+              value: "8093"
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:

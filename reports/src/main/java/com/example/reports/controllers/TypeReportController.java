@@ -1,7 +1,9 @@
 package com.example.reports.controllers;
 
+import com.example.reports.entities.ComparativeReportEntity;
 import com.example.reports.entities.TypeReportEntity;
 import com.example.reports.models.DetailModel;
+import com.example.reports.services.ComparativeReportService;
 import com.example.reports.services.TypeReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import java.util.List;
 public class TypeReportController {
     @Autowired
     TypeReportService typeReportService;
+    @Autowired
+    ComparativeReportService comparativeReportService;
 
     @GetMapping("/")
     public ResponseEntity<List<TypeReportEntity>> listTypeReports() {
@@ -36,6 +40,23 @@ public class TypeReportController {
         return ResponseEntity.ok(reports);
     }
 
+    // Comparative Reports
+    @GetMapping("/comparative-reports/list")
+    public ResponseEntity<List<ComparativeReportEntity>> listComparativeReports() {
+        List<ComparativeReportEntity> comparativeReports = comparativeReportService.getComparativeReports();
+        return ResponseEntity.ok(comparativeReports);
+    }
+
+    @GetMapping("/comparative-reports/generate")
+    public ResponseEntity<Void> bringComparativeReports(@RequestParam("month") int month, @RequestParam("year") int year) {
+        List<String> repairNames = comparativeReportService.getRepairNames();
+        comparativeReportService.makeBlankReport(repairNames);
+        comparativeReportService.makeReport(month, year);
+        comparativeReportService.calculateVariations();
+        return ResponseEntity.noContent().build();
+    }
+
+    // Details
     @GetMapping("/details/month/{month}/year/{year}")
     public ResponseEntity<List<DetailModel>> getDetailsByMonthAndYear(@PathVariable int month,
                                                                       @PathVariable int year) {

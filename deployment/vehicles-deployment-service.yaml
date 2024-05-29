@@ -18,10 +18,10 @@ spec:
         - name: vehicles
           image: dilget/vehicles
           ports:
-            - containerPort: 8093
+            - containerPort: 8090
           env:
             - name: SERVER_PORT
-              value: "8093"
+              value: "8090"
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:

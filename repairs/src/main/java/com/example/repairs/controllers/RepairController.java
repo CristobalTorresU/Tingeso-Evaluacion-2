@@ -1,8 +1,10 @@
 package com.example.repairs.controllers;
 
+import com.example.repairs.entities.DetailEntity;
 import com.example.repairs.entities.RepairEntity;
 import com.example.repairs.models.BonusModel;
 import com.example.repairs.models.RepairListModel;
+import com.example.repairs.services.DetailService;
 import com.example.repairs.services.RepairService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.List;
 public class RepairController {
     @Autowired
     RepairService repairService;
+    @Autowired
+    DetailService detailService;
 
     @GetMapping("/")
     public ResponseEntity<List<RepairEntity>> listRepairs() {
@@ -35,22 +39,6 @@ public class RepairController {
         return ResponseEntity.noContent().build();
     }
 
-    /*
-    @GetMapping("/calculate")
-    public ResponseEntity<Void> calculatePrice(@RequestParam("plate") String plate,
-                                               @RequestParam("checkinDate") String checkinDate,
-                                               @RequestParam("checkinHour") String checkinHour,
-                                               @RequestParam("repair") String repair,
-                                               @RequestParam("exitDate") String exitDate,
-                                               @RequestParam("exitHour") String exitHour,
-                                               @RequestParam("collectDate") String collectDate,
-                                               @RequestParam("collectHour") String collectHour) {
-        repairService.calculateTotalAmount(plate, checkinDate, checkinHour, repair,
-                exitDate, exitHour, collectDate, collectHour);
-        return ResponseEntity.noContent().build();
-    }
-    */
-
     @GetMapping("/calculate")
     public ResponseEntity<Void> calculatePrice(@RequestParam("plate") String plate,
                                                @RequestParam("checkinDate") String checkinDate,
@@ -65,6 +53,27 @@ public class RepairController {
         return ResponseEntity.noContent().build();
     }
 
+    // Details
+    @GetMapping("/details/")
+    public ResponseEntity<List<DetailEntity>> listDetails() {
+        List<DetailEntity> details = detailService.getDetails();
+        return ResponseEntity.ok(details);
+    }
+
+    @GetMapping("/details/{id}")
+    public ResponseEntity<DetailEntity> getDetailById(@PathVariable Long id) {
+        DetailEntity detail = detailService.getDetailById(id);
+        return ResponseEntity.ok(detail);
+    }
+
+    @GetMapping("/details/month/{month}/year/{year}")
+    public ResponseEntity<List<DetailEntity>> getDetailsByMonthAndYear(@PathVariable int month,
+                                                                      @PathVariable int year) {
+        List<DetailEntity> details = detailService.getByMonthAndYear(month, year);
+        return ResponseEntity.ok(details);
+    }
+
+    // RestTemplate
     @GetMapping("/bonuses/{brand}")
     public ResponseEntity<BonusModel> getBonus(@PathVariable String brand) {
         BonusModel bonus = repairService.getBonus(brand);
