@@ -9,7 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="repairs" />
         <module name="reports" />
-        <module name="config-service" />
+        <module name="config-server" />
         <module name="repairs-list" />
         <module name="vehicles" />
         <module name="gateway-server" />
@@ -21,7 +21,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="bonuses" options="-parameters" />
-      <module name="config-service" options="-parameters" />
+      <module name="config-server" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="gateway-server" options="-parameters" />
       <module name="repairs" options="-parameters" />
