@@ -7,16 +7,16 @@ metadata:
 data:
   DB_HOST_VEHICLES: vehicles-db-service
   DB_PORT_VEHICLES: "5432"
-  DB_NAME_VEHICLES: vehicles-db
+  DB_NAME_VEHICLES: vehicles_db
   DB_HOST_REPAIRS: repairs-db-service
   DB_PORT_REPAIRS: "5432"
-  DB_NAME_REPAIRS: repairs-db
+  DB_NAME_REPAIRS: repairs_db
   DB_HOST_REPAIRS_LIST: repairs-list-db-service
   DB_PORT_REPAIRS_LIST: "5432"
-  DB_NAME_REPAIRS_LIST: repairs-list-db
+  DB_NAME_REPAIRS_LIST: repairs_list_db
   DB_HOST_REPORTS: reports-db-service
   DB_PORT_REPORTS: "5432"
-  DB_NAME_REPORTS: reports-db
+  DB_NAME_REPORTS: reports_db
   DB_HOST_BONUSES: bonuses-db-service
   DB_PORT_BONUSES: "5432"
-  DB_NAME_BONUSES: bonuses-db
+  DB_NAME_BONUSES: bonuses_db
