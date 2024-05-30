@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/repair-list")
-@CrossOrigin("*")
 public class RepairListController {
     @Autowired
     RepairListService repairListService;

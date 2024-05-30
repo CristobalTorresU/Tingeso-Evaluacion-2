@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/bonuses")
-@CrossOrigin("*")
 public class BonusController {
     @Autowired
     BonusService bonusService;

@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/comparative-reports")
-@CrossOrigin("*")
 public class ComparativeReportController {
     @Autowired
     ComparativeReportService comparativeReportService;

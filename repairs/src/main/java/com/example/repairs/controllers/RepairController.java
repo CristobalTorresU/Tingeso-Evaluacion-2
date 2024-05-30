@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/repairs")
-@CrossOrigin("*")
 public class RepairController {
     @Autowired
     RepairService repairService;

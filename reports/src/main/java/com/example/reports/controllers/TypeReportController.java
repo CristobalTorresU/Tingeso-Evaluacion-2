@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/type-reports")
-@CrossOrigin("*")
 public class TypeReportController {
     @Autowired
     TypeReportService typeReportService;
