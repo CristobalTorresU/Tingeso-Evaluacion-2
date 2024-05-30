@@ -40,37 +40,48 @@ const TypeReportList = () => {
                 <TableHead>
                     <TableRow>
                         <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                            Tipo de Reparación
+                            Lista de Reparaciones
                         </TableCell>
                         <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                            Tipo de Vehículo
+                            Sedán
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Número de Vehículos
+                            Hatchback
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Monto Total
+                            SUV
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Pickup
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Furgoneta
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Total
                         </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {typeReports.map((typeReport) => (
-                        <TableRow
-                            key={typeReport.id}
-                        >
-                            <TableCell align="left">{typeReport.repairName}</TableCell>
-                            <TableCell align="center">{typeReport.type}</TableCell>
-                            <TableCell align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    typeReport.quantity
-                                )}
-                            </TableCell>
-                            <TableCell align="right">
-                                $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    typeReport.totalAmount
-                                )}
-                            </TableCell>
-                        </TableRow>
+                        <React.Fragment key={typeReport.id}>
+                            <TableRow>
+                                <TableCell align="left">{typeReport.repairName}</TableCell>
+                                <TableCell align="right">
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.quantity
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.totalAmount
+                                    )}
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+
+                            </TableRow>
+                        </React.Fragment>
                     ))}
                 </TableBody>
             </Table>

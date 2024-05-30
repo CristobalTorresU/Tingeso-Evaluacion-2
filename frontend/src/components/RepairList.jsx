@@ -15,33 +15,6 @@ import InfoIcon from "@mui/icons-material/Info";
 const RepairList = () => {
     const [repairs, setRepair] = useState([]);
 
-    const NameToRepair =  (number) => {
-        switch (number) {
-            case 1:
-                return 'Reparaciones del Sistema de Frenos';
-            case 2:
-                return 'Servicio del Sistema de Refrigeración';
-            case 3:
-                return 'Reparaciones del Motor';
-            case 4:
-                return 'Reparaciones de la Transmisión';
-            case 5:
-                return 'Reparación del Sistema Eléctrico';
-            case 6:
-                return 'Reparaciones del Sistema de Escape';
-            case 7:
-                return 'Reparación de Neumáticos y Ruedas';
-            case 8:
-                return 'Reparaciones de la Suspensión y la Dirección';
-            case 9:
-                return 'Reparación del Sistema de Aire Acondicionado y Calefacción';
-            case 10:
-                return 'Reparaciones del Sistema de Combustible';
-            case 11:
-                return 'Reparación y Reemplazo del Parabrisas y Cristales';
-        }
-    };
-
     const navigate = useNavigate();
 
     const init = () => {
@@ -84,28 +57,55 @@ const RepairList = () => {
                             Patente
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Fecha Entrada
+                            Marca
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Hora Entrada
+                            Modelo
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Reparación
+                            Tipo Vehiculo
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Fecha Salida
+                            Ano Fabricacion
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Hora Salida
+                            Tipo Motor
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Fecha Colecta
+                            Fecha Ingreso Taller
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Hora Colecta
+                            Hora Ingreso Taller
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Monto Total
+                            Monto Total Reparaciones
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Monto Recargos
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Monto Dctos
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            SUB Total
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Monto IVA
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Costo Total
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Fecha Salida Taller
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Hora Salida Taller
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Fecha Retiro Cliente
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                            Hora Retiro Cliente
                         </TableCell>
                     </TableRow>
                 </TableHead>
