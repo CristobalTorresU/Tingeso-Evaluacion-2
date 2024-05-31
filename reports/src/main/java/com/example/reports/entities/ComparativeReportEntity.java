@@ -34,4 +34,6 @@ public class ComparativeReportEntity {
     private int variationA2;
     private int variationA3;
     private String repair;
+    private int year;
+    private int month;
 }

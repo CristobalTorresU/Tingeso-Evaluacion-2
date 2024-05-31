@@ -17,6 +17,7 @@ const RepairList = () => {
 
     const navigate = useNavigate();
 
+    // TODO: Hacer que tome distintos atributos de vehiculos y detalles simultaneamente para mostrarlo en el front.
     const init = () => {
         repairService
             .getAll()
@@ -113,22 +114,30 @@ const RepairList = () => {
                     {repairs.map((repair) => (
                         <TableRow
                             key={repair.id}
-                            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                         >
                             <TableCell align="right">{repair.plate}</TableCell>
+                            <TableCell align="right">{vehicle.brand}</TableCell>
+                            <TableCell align="right">{vehicle.model}</TableCell>
+                            <TableCell align="right">{vehicle.type}</TableCell>
+                            <TableCell align="right">{vehicle.year}</TableCell>
+                            <TableCell align="right">{vehicle.motor}</TableCell>
                             <TableCell align="right">{repair.checkinDate}</TableCell>
                             <TableCell align="right">{repair.checkinHour}</TableCell>
-                            <TableCell align="right">{NameToRepair(repair.reparationType)}</TableCell>
-                            <TableCell align="right">{repair.exitDate}</TableCell>
-                            <TableCell align="right">{repair.exitHour}</TableCell>
-                            <TableCell align="right">{repair.collectDate}</TableCell>
-                            <TableCell align="right">{repair.collectHour}</TableCell>
-
                             <TableCell align="right">
                                 $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                     repair.totalAmount
                                 )}
                             </TableCell>
+                            <TableCell align="right">{repair.rechargeAmount}</TableCell>
+                            <TableCell align="right">{repair.discountAmount}</TableCell>
+
+
+                            <TableCell align="right">{repair.iva}</TableCell>
+                            <TableCell align="right">{repair.exitDate}</TableCell>
+                            <TableCell align="right">{repair.exitHour}</TableCell>
+                            <TableCell align="right">{repair.collectDate}</TableCell>
+                            <TableCell align="right">{repair.collectHour}</TableCell>
+
                             <TableCell>
                                 <Button
                                     variant="contained"

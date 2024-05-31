@@ -124,7 +124,7 @@ const RepairListPrices = () => {
               </TableCell>
               <TableCell align="right">
                 {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                  repairList.electricAmonut
+                  repairList.electricAmount
                 )}
               </TableCell>
               <TableCell>

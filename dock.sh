@@ -49,6 +49,7 @@ docker push dilget/gateway-server
 
 cd ..
 cd frontend/
+npm install
 npm run build
 docker build -t dilget/frontend:latest .
 docker push dilget/frontend
