@@ -71,6 +71,9 @@ public class ComparativeReportService {
             ComparativeReportEntity report = comparativeReportRepository.findByRepair(detailsNow.get(i).getRepairType());
             report.setAmountNow(report.getAmountNow() + detailsNow.get(i).getAmount());
             report.setQuantityNow(report.getQuantityNow() + 1);
+            // TODO: MEDIDA PARCHE
+            report.setYear(year);
+            report.setMonth(month);
         }
 
         for (int i = 0 ; i < details1month.size() ; i++) {

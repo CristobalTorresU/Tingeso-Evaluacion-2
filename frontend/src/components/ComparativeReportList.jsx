@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type_reportService from "../services/type_report.service";
+import type_reportService from "../services/comparative_report.service";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -34,22 +34,24 @@ const ComparativeReportList = () => {
             case 10:
                 return 'OCTUBRE';
             case 11:
+            case -2:
                 return 'NOVIEMBRE';
             case 12:
+            case -1:
                 return 'DICIEMBRE';
         }
     };
 
     const init = () => {
         type_reportService
-            .getOrder()
+            .getAll()
             .then((response) => {
-                console.log("Mostrando reporte por tipos.", response.data);
+                console.log("Mostrando reporte comparativo mensual.", response.data);
                 setComparativeReport(response.data);
             })
             .catch((error) => {
                 console.log(
-                    "Se ha producido un error al intentar mostrar el reporte por tipo",
+                    "Se ha producido un error al intentar mostrar el reporte comparativo mensual.",
                     error
                 );
             });
@@ -72,19 +74,19 @@ const ComparativeReportList = () => {
                             MES
                         </TableCell>
                         <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                            {NumberToMonth(comparativeReport)}
+                            {NumberToMonth(comparativeReport.month)}
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
                             % Variacion
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            {NumberToMonth(comparativeReport)}
+                            {NumberToMonth(comparativeReport.month - 1)}
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
                             % Variacion
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            {NumberToMonth(comparativeReport)}
+                            {NumberToMonth(comparativeReport.month - 2)}
                         </TableCell>
                     </TableRow>
                 </TableHead>
@@ -119,6 +121,7 @@ const ComparativeReportList = () => {
                                     )}
                                 </TableCell>
                             </TableRow>
+                                <TableCell align="right">UwU</TableCell>
                                 <TableCell align="right">
                                     $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                         comparativeReport.amountNow

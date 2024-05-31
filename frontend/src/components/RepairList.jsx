@@ -64,10 +64,10 @@ const RepairList = () => {
                             Modelo
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Tipo Vehiculo
+                            Tipo Vehículo
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Ano Fabricacion
+                            Año Fabricacion
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
                             Tipo Motor

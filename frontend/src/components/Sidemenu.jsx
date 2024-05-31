@@ -14,20 +14,13 @@ import AnalyticsIcon from "@mui/icons-material/Analytics";
 import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router-dom";
 import type_reportService from "../services/type_report.service";
+import comparative_reportService from "../services/comparative_report.service";
 
 export default function Sidemenu({ open, toggleDrawer }) {
   const navigate = useNavigate();
 
   const generateReports = (r) => {
     r.preventDefault();
-    time_reportService
-      .generate()
-      .then((response) => {
-        console.log("Reporte de tiempo ha sido generado.", response.data);
-      })
-      .catch((error) => {
-        console.log("Ocurrio un error al generar el reporte de tiempos.", error);
-      });
     type_reportService
       .generate()
       .then((response) => {
@@ -36,13 +29,13 @@ export default function Sidemenu({ open, toggleDrawer }) {
       .catch((error) => {
         console.log("Ocurrio un error al generar el reporte de tiempos.", error);
       });
-    motor_reportService
+    comparative_reportService
       .generate()
       .then((response) => {
-        console.log("Reporte de motor ha sido generado.", response.data);
+        console.log("Reporte Comparativo ha sido generado.", response.data);
       })
       .catch((error) => {
-        console.log("Ocurrio un error al generar el reporte de tiempos.", error);
+        console.log("Ocurrio un error al generar el reporte comparativo.", error);
       });
     console.log("Fin generacion reporte.");
   };

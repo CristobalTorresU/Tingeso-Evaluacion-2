@@ -13,7 +13,7 @@ const TypeReportList = () => {
 
     const init = () => {
         type_reportService
-            .getOrder()
+            .getAll()
             .then((response) => {
                 console.log("Mostrando reporte por tipos.", response.data);
                 setTypeReport(response.data);
