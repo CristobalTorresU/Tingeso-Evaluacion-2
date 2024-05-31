@@ -79,7 +79,6 @@ const TypeReportList = () => {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-
                             </TableRow>
                         </React.Fragment>
                     ))}

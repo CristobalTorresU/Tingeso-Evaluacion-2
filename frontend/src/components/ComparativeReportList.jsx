@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type_reportService from "../services/comparative_report.service";
+import comparative_reportService from "../services/comparative_report.service";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -43,7 +43,7 @@ const ComparativeReportList = () => {
     };
 
     const init = () => {
-        type_reportService
+        comparative_reportService
             .getAll()
             .then((response) => {
                 console.log("Mostrando reporte comparativo mensual.", response.data);
@@ -73,21 +73,25 @@ const ComparativeReportList = () => {
                         <TableCell align="left" sx={{ fontWeight: "bold" }}>
                             MES
                         </TableCell>
-                        <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                            {NumberToMonth(comparativeReport.month)}
-                        </TableCell>
-                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            % Variacion
-                        </TableCell>
-                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            {NumberToMonth(comparativeReport.month - 1)}
-                        </TableCell>
-                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            % Variacion
-                        </TableCell>
-                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            {NumberToMonth(comparativeReport.month - 2)}
-                        </TableCell>
+                        {comparativeReports.length > 0 && (
+                            <>
+                                <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                                    {NumberToMonth(comparativeReport.month)}
+                                </TableCell>
+                                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                                    % Variacion
+                                </TableCell>
+                                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                                    {NumberToMonth(comparativeReport.month - 1)}
+                                </TableCell>
+                                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                                    % Variacion
+                                </TableCell>
+                                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                                    {NumberToMonth(comparativeReport.month - 2)}
+                                </TableCell>
+                            </>
+                        )}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -121,6 +125,7 @@ const ComparativeReportList = () => {
                                     )}
                                 </TableCell>
                             </TableRow>
+                            <TableRow>
                                 <TableCell align="right">UwU</TableCell>
                                 <TableCell align="right">
                                     $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
@@ -147,7 +152,6 @@ const ComparativeReportList = () => {
                                         comparativeReport.amount2
                                     )}
                                 </TableCell>
-                            <TableRow>
                             </TableRow>
                         </React.Fragment>
                     ))}
