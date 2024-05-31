@@ -20,3 +20,4 @@ kubectl apply -f repairs-deployment-service.yaml
 kubectl apply -f repairs-list-deployment-service.yaml
 kubectl apply -f reports-deployment-service.yaml
 kubectl apply -f bonuses-deployment-service.yaml
+kubectl apply -f frontend-deployment-service.yaml

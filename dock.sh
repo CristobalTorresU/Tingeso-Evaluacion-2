@@ -46,3 +46,9 @@ cd gateway-server/
 mvn clean install -DskipTests=True
 docker build -t dilget/gateway-server .
 docker push dilget/gateway-server
+
+cd ..
+cd frontend/
+npm run build
+docker build -t dilget/frontend:latest .
+docker push dilget/frontend
