@@ -33,12 +33,6 @@ public class TypeReportController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/ordered")
-    public ResponseEntity<List<TypeReportEntity>> orderedTypeReports() {
-        List<TypeReportEntity> reports = typeReportService.getTypeOrdered();
-        return ResponseEntity.ok(reports);
-    }
-
     // Comparative Reports
     @GetMapping("/comparative-reports/list")
     public ResponseEntity<List<ComparativeReportEntity>> listComparativeReports() {

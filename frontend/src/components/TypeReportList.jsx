@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import type_reportService from "../services/type_report.service";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -58,7 +58,7 @@ const TypeReportList = () => {
                             Furgoneta
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Total
+                            TOTAL
                         </TableCell>
                     </TableRow>
                 </TableHead>
@@ -69,16 +69,71 @@ const TypeReportList = () => {
                                 <TableCell align="left">{typeReport.repairName}</TableCell>
                                 <TableCell align="right">
                                     {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                        typeReport.quantity
+                                        typeReport.quantitySedan
                                     )}
                                 </TableCell>
                                 <TableCell align="right">
-                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                        typeReport.totalAmount
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.quantityHatchback
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.quantitySUV
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.quantityPickup
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.quantityFurgoneta
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.quantitySedan + typeReport.quantityFurgoneta + 
+                                        typeReport.quantityHatchback + typeReport.quantityPickup +
+                                        typeReport.quantitySUV
                                     )}
                                 </TableCell>
                             </TableRow>
                             <TableRow>
+                                <TableCell align="left"></TableCell>
+                                <TableCell align="right">
+                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.totalAmountSedan
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.totalAmountHatchback
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.totalAmountSUV
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.totalAmountPickup
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.totalAmountFurgoneta
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                        typeReport.totalAmountSedan + typeReport.totalAmountFurgoneta +
+                                        typeReport.totalAmountHatchback + typeReport.totalAmountSUV + 
+                                        typeReport.totalAmountPickup
+                                    )}
+                                </TableCell>
                             </TableRow>
                         </React.Fragment>
                     ))}

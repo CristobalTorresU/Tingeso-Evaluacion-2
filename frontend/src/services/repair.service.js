@@ -32,4 +32,10 @@ const calculateIn = () => {
 }
 */
 
-export default { getAll, get, calculate };
+const getVehicle = plate => {
+    return httpClient.get(`/api/repairs/vehicles/${plate}`);
+}
+
+//const getDetail
+
+export default { getAll, get, calculate, getVehicle };

@@ -18,7 +18,14 @@ public class TypeReportEntity {
     private Long id;
 
     private String repairName;
-    private int quantity;
-    private String type;
-    private int totalAmount;
+    private int quantitySedan;
+    private int quantityHatchback;
+    private int quantitySUV;
+    private int quantityPickup;
+    private int quantityFurgoneta;
+    private int totalAmountSedan;
+    private int totalAmountHatchback;
+    private int totalAmountSUV;
+    private int totalAmountPickup;
+    private int totalAmountFurgoneta;
 }

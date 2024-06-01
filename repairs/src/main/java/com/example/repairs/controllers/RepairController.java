@@ -72,6 +72,24 @@ public class RepairController {
         return ResponseEntity.ok(details);
     }
 
+    @GetMapping("/vehicles/{plate}")
+    public ResponseEntity<String> getVehicleType(@PathVariable String plate) {
+        String type = detailService.getVehicleType(plate);
+        return ResponseEntity.ok(type);
+    }
+
+    @GetMapping("/details/list/{repairId}")
+    public ResponseEntity<List<DetailEntity>> getDetailsByRepairId(@PathVariable Long repairId) {
+        List<DetailEntity> details = detailService.getDetailsByRepairId(repairId);
+        return ResponseEntity.ok(details);
+    }
+
+    @GetMapping("/details/vehicles/{plate}")
+    public ResponseEntity<List<DetailEntity>> getDetailsByPlate(@PathVariable String plate) {
+        List<DetailEntity> details = detailService.getDetailsByPlate(plate);
+        return ResponseEntity.ok(details);
+    }
+
     // RestTemplate
     @GetMapping("/bonuses/{brand}")
     public ResponseEntity<BonusModel> getBonus(@PathVariable String brand) {

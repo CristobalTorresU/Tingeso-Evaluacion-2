@@ -12,6 +12,10 @@ const get = id => {
     return httpClient.get(`/api/vehicles/${id}`);
 }
 
+const getByPlate = plate => {
+    return httpClient.get(`/api/vehicles/${plate}`);
+}
+
 const update = data => {
     return httpClient.put('/api/vehicles/', data);
 }
@@ -20,4 +24,4 @@ const remove = id => {
     return httpClient.delete(`/api/vehicles/${id}`);
 }
 
-export default { getAll, create, get, update, remove };
+export default { getAll, create, get, getByPlate, update, remove };

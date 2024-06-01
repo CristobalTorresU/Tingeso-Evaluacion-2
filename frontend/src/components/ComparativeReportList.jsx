@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import comparative_reportService from "../services/comparative_report.service";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -34,10 +34,10 @@ const ComparativeReportList = () => {
             case 10:
                 return 'OCTUBRE';
             case 11:
-            case -2:
+            case -1:
                 return 'NOVIEMBRE';
             case 12:
-            case -1:
+            case 0:
                 return 'DICIEMBRE';
         }
     };
@@ -76,19 +76,19 @@ const ComparativeReportList = () => {
                         {comparativeReports.length > 0 && (
                             <>
                                 <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                                    {NumberToMonth(comparativeReport.month)}
+                                    {NumberToMonth(comparativeReports[0].month)}
                                 </TableCell>
                                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                                     % Variacion
                                 </TableCell>
                                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                                    {NumberToMonth(comparativeReport.month - 1)}
+                                    {NumberToMonth(comparativeReports[0].month - 1)}
                                 </TableCell>
                                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                                     % Variacion
                                 </TableCell>
                                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                                    {NumberToMonth(comparativeReport.month - 2)}
+                                    {NumberToMonth(comparativeReports[0].month - 2)}
                                 </TableCell>
                             </>
                         )}
@@ -98,44 +98,44 @@ const ComparativeReportList = () => {
                     {comparativeReports.map((comparativeReport) => (
                         <React.Fragment key={comparativeReport.id}>
                             <TableRow>
-                                <TableCell align="left">{comparativeReport.repairName}</TableCell>
+                                <TableCell align="left">{comparativeReport.repair}</TableCell>
                                 <TableCell align="right">
                                     {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                         comparativeReport.quantityNow
                                     )}
                                 </TableCell>
                                 <TableCell align="right">
-                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                         comparativeReport.variationQ1
-                                    )}
+                                    )}%
                                 </TableCell>
                                 <TableCell align="right">
-                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                         comparativeReport.quantity1
                                     )}
                                 </TableCell>
                                 <TableCell align="right">
-                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                         comparativeReport.variationQ2
-                                    )}
+                                    )}%
                                 </TableCell>
                                 <TableCell align="right">
-                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                         comparativeReport.quantity2
-                                    )}
+                                    )}%
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell align="right">UwU</TableCell>
+                                <TableCell align="right"></TableCell>
                                 <TableCell align="right">
                                     $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                         comparativeReport.amountNow
                                     )}
                                 </TableCell>
                                 <TableCell align="right">
-                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                         comparativeReport.variationA1
-                                    )}
+                                    )}%
                                 </TableCell>
                                 <TableCell align="right">
                                     $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
@@ -143,9 +143,9 @@ const ComparativeReportList = () => {
                                     )}
                                 </TableCell>
                                 <TableCell align="right">
-                                    $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                    {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                         comparativeReport.variationA2
-                                    )}
+                                    )}%
                                 </TableCell>
                                 <TableCell align="right">
                                     $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(

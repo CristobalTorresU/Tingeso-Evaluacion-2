@@ -27,6 +27,13 @@ public class DetailController {
         return ResponseEntity.ok(detail);
     }
 
+    @GetMapping("/list/{repairId}")
+    public ResponseEntity<List<DetailEntity>> getDetailsByRepairId(@PathVariable Long repairId) {
+        List<DetailEntity> details = detailService.getDetailsByRepairId(repairId);
+        return ResponseEntity.ok(details);
+    }
+
+    // RestTemplate
     @GetMapping("/repair-list/list")
     public ResponseEntity<List<String>> getRepairTypes() {
         List<String> repairTypes = detailService.getRepairTypes();

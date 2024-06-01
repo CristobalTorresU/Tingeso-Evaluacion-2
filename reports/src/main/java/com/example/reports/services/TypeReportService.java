@@ -28,14 +28,20 @@ public class TypeReportService {
         typeReportRepository.deleteAll();
 
         // Se crean los nuevos registros en blanco en la tabla.
-        String[] types = {"Sedán", "Hatchback", "SUV", "Pickup", "Furgoneta"};
         for (int j = 0 ; j < repairs.size(); j++) {
             for (int i = 0; i < 5; i++) {
                 TypeReportEntity report = new TypeReportEntity();
                 report.setRepairName(repairs.get(j));
-                report.setType(types[i]);
-                report.setQuantity(0);
-                report.setTotalAmount(0);
+                report.setQuantitySedan(0);
+                report.setQuantityHatchback(0);
+                report.setQuantitySUV(0);
+                report.setQuantityPickup(0);
+                report.setQuantityFurgoneta(0);
+                report.setTotalAmountSedan(0);
+                report.setTotalAmountHatchback(0);
+                report.setTotalAmountSUV(0);
+                report.setTotalAmountPickup(0);
+                report.setTotalAmountFurgoneta(0);
 
                 typeReportRepository.save(report);
             }
@@ -44,8 +50,28 @@ public class TypeReportService {
 
     public void addToReport(int amount, String repairName, String type) {
         TypeReportEntity report = typeReportRepository.findByRepairNameAndType(repairName, type);
-        report.setQuantity(report.getQuantity() + 1);
-        report.setTotalAmount(report.getTotalAmount() + amount);
+        switch (type) {
+            case "Sedán":
+                report.setQuantitySedan(report.getQuantitySedan() + 1);
+                report.setTotalAmountSedan(report.getTotalAmountSedan() + amount);
+                break;
+            case "Hatchback":
+                report.setQuantityHatchback(report.getQuantityHatchback() + 1);
+                report.setTotalAmountHatchback(report.getTotalAmountHatchback() + amount);
+                break;
+            case "SUV":
+                report.setQuantitySUV(report.getQuantitySUV() + 1);
+                report.setTotalAmountSUV(report.getTotalAmountSUV() + amount);
+                break;
+            case "Pickup":
+                report.setQuantityPickup(report.getQuantityPickup() + 1);
+                report.setTotalAmountPickup(report.getTotalAmountPickup() + amount);
+                break;
+            case "Furgoneta":
+                report.setQuantityFurgoneta(report.getQuantityFurgoneta() + 1);
+                report.setTotalAmountFurgoneta(report.getTotalAmountFurgoneta() + amount);
+                break;
+        }
         typeReportRepository.save(report);
     }
 
@@ -69,9 +95,5 @@ public class TypeReportService {
     public List<String> getRepairNames() {
         ParameterizedTypeReference<List<String>> responseType = new ParameterizedTypeReference<List<String>>() {};
         return restTemplate.exchange("http://repairs/api/details/repair-list/list", HttpMethod.GET, null, responseType).getBody();
-    }
-
-    public List<TypeReportEntity> getTypeOrdered() {
-        return typeReportRepository.orderByTotalAmount();
     }
 }

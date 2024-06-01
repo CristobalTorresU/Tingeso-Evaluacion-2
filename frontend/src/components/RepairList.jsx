@@ -8,16 +8,48 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import repairService from "../services/repair.service";
+import vehicleService from "../services/vehicle.service";
 import Button from "@mui/material/Button";
 import CarRepair from "@mui/icons-material/CarRepair";
 import InfoIcon from "@mui/icons-material/Info";
 
 const RepairList = () => {
     const [repairs, setRepair] = useState([]);
+    const [vehicles, setVehicle] = useState([]);
 
     const navigate = useNavigate();
 
+    const fetchVehicleDetails = async (plate) => {
+        try {
+            const response = await vehicleService.getByPlate(plate);
+            return response.data;
+        } catch (error) {
+            console.error(`Error fetching vehicle details for plate ${plate}:`, error);
+            return null;
+        }
+    };
+
+    const init = async () => {
+        try {
+            const repairResponse = await repairService.getAll();
+            const repairData = repairResponse.data;
+
+            const vehiclePromises = repairData.map(repair => fetchVehicleDetails());
+            const vehicleData = await Promise.all(vehiclePromises);
+
+            const combinedData = repairData.map((repair, index) => ({
+                ...repair,
+                vehicle: vehicleData[index]
+            }));
+
+            setRepair(combinedData);
+        } catch (error) {
+            console.log("Se ha producido un error al intentar mostrar planilla de reparaciones.", error);
+        }
+    };
+
     // TODO: Hacer que tome distintos atributos de vehiculos y detalles simultaneamente para mostrarlo en el front.
+    /*
     const init = () => {
         repairService
             .getAll()
@@ -35,6 +67,7 @@ const RepairList = () => {
                 );
             });
     };
+    */
 
     useEffect(() => {
         init();

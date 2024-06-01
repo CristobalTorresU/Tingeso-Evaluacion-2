@@ -13,7 +13,4 @@ public interface TypeReportRepository extends JpaRepository<TypeReportEntity, Lo
     @Query(value = "SELECT * FROM type_report WHERE type_report.repair_name = :repairName AND type_report.type = :type", nativeQuery = true)
     public TypeReportEntity findByRepairNameAndType(@Param("repairName") String repairName,
                                                     @Param("type") String type);
-
-    @Query(value = "SELECT * FROM type_report ORDER BY type_report.total_amount DESC", nativeQuery = true)
-    List<TypeReportEntity> orderByTotalAmount();
 }
