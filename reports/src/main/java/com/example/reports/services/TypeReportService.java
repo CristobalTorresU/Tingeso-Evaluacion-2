@@ -29,27 +29,25 @@ public class TypeReportService {
 
         // Se crean los nuevos registros en blanco en la tabla.
         for (int j = 0 ; j < repairs.size(); j++) {
-            for (int i = 0; i < 5; i++) {
-                TypeReportEntity report = new TypeReportEntity();
-                report.setRepairName(repairs.get(j));
-                report.setQuantitySedan(0);
-                report.setQuantityHatchback(0);
-                report.setQuantitySUV(0);
-                report.setQuantityPickup(0);
-                report.setQuantityFurgoneta(0);
-                report.setTotalAmountSedan(0);
-                report.setTotalAmountHatchback(0);
-                report.setTotalAmountSUV(0);
-                report.setTotalAmountPickup(0);
-                report.setTotalAmountFurgoneta(0);
+            TypeReportEntity report = new TypeReportEntity();
+            report.setRepairName(repairs.get(j));
+            report.setQuantitySedan(0);
+            report.setQuantityHatchback(0);
+            report.setQuantitySUV(0);
+            report.setQuantityPickup(0);
+            report.setQuantityFurgoneta(0);
+            report.setTotalAmountSedan(0);
+            report.setTotalAmountHatchback(0);
+            report.setTotalAmountSUV(0);
+            report.setTotalAmountPickup(0);
+            report.setTotalAmountFurgoneta(0);
 
-                typeReportRepository.save(report);
-            }
+            typeReportRepository.save(report);
         }
     }
 
     public void addToReport(int amount, String repairName, String type) {
-        TypeReportEntity report = typeReportRepository.findByRepairNameAndType(repairName, type);
+        TypeReportEntity report = typeReportRepository.findByRepairNameAndType(repairName);
         switch (type) {
             case "Sedán":
                 report.setQuantitySedan(report.getQuantitySedan() + 1);
