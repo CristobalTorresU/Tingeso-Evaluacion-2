@@ -19,6 +19,7 @@ public interface DetailRepository extends JpaRepository<DetailEntity, Long>{
     @Query(value = "SELECT * FROM detail WHERE detail.plate = :plate AND detail.date >= CURRENT_DATE - INTERVAL '1 YEAR'", nativeQuery = true)
     List<DetailEntity> findByPlateLastYear(@Param("plate") String plate);
 
+    @Query(value = "SELECT * FROM detail WHERE detail.repair_id = :id", nativeQuery = true)
     public List<DetailEntity> findByRepair_id(Long id);
 
     /*
