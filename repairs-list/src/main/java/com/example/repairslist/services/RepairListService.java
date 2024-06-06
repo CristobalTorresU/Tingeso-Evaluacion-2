@@ -46,6 +46,11 @@ public class RepairListService {
     }
 
     public List<String> getRepairListNames() {
-        return repairListRepository.findRepairNames();
+        ArrayList<RepairListEntity> repairs = (ArrayList<RepairListEntity>) repairListRepository.findAll();
+        List<String> names = new ArrayList<>();
+        for (RepairListEntity repair : repairs) {
+            names.add(repair.getRepairName());
+        }
+        return names;
     }
 }

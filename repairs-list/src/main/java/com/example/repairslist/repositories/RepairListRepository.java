@@ -10,7 +10,4 @@ import java.util.List;
 @Repository
 public interface RepairListRepository extends JpaRepository<RepairListEntity, Long> {
     public RepairListEntity findByRepairName(String name);
-
-    @Query(value = "SELECT repair_list.repairName FROM repair_list", nativeQuery = true)
-    public List<String> findRepairNames();
 }
