@@ -47,6 +47,12 @@ public class RepairService {
         }
     }
 
+    public VehicleModel getVehicleByRepairId(Long id) {
+        List<DetailEntity> details = detailService.getDetailsByRepairId(id);
+        String plate = details.get(0).getPlate();
+        return detailService.getVehicle(plate);
+    }
+
     public BonusModel getBonus(String brand) {
         return restTemplate.getForObject("http://bonuses/api/bonuses/by-brand/" + brand, BonusModel.class);
     }
@@ -111,6 +117,7 @@ public class RepairService {
         repair.setCollectHour(collectHour);
         repair.setTotalAmount(totalPrice);
         repair.setIva(iva);
+        repair.setRepairsAmount((int)reparations);
         repair.setDiscountsAmount(discounts);
         repair.setRechargesAmount(recharges);
 

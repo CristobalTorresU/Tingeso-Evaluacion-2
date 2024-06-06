@@ -4,6 +4,7 @@ import com.example.repairs.entities.DetailEntity;
 import com.example.repairs.entities.RepairEntity;
 import com.example.repairs.models.BonusModel;
 import com.example.repairs.models.RepairListModel;
+import com.example.repairs.models.VehicleModel;
 import com.example.repairs.services.DetailService;
 import com.example.repairs.services.RepairService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/repairs")
@@ -20,10 +23,26 @@ public class RepairController {
     @Autowired
     DetailService detailService;
 
+    /*
     @GetMapping("/")
     public ResponseEntity<List<RepairEntity>> listRepairs() {
         List<RepairEntity> repairs = repairService.getRepairs();
         return ResponseEntity.ok(repairs);
+    }
+    */
+
+    @GetMapping("/")
+    public ResponseEntity<List<Map<String, Object>>> listRepairs() {
+        List<RepairEntity> repairs = repairService.getRepairs();
+        List<Map<String, Object>> repairsWithVehicles = repairs.stream().map(repair -> {
+            // TODO: Hacer que con getVehicleByRepairId se obtenga el vehículo de la reparación, tomando solo el primer objeto.
+            VehicleModel vehicle = repairService.getVehicleByRepairId(repair.getId());
+            return Map.of(
+                    "repair", repair,
+                    "vehicle", vehicle
+            );
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok(repairsWithVehicles);
     }
 
     @GetMapping("/{id}")
