@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import repairService from "../services/repair.service";
+import repair_listService from "../services/repair_list.service";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -26,6 +27,20 @@ const RepairCalculate = () => {
   const [selectedReparationType, setSelectedReparationType] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Función para obtener los nombres de reparaciones de la base de datos
+    const fetchRepairNames = async () => {
+      try {
+        const response = await repair_listService.getNames(); // Ajusta esto a tu servicio
+        setRepairNames(response.data);
+      } catch (error) {
+        console.error("Error al obtener los nombres de reparaciones:", error);
+      }
+    };
+
+    fetchRepairNames();
+  }, []);
 
   const formatTime = (time) => {
     return moment(time).format('HH:mm:ss');
@@ -92,7 +107,7 @@ const RepairCalculate = () => {
         </LocalizationProvider>
 
         <div>
-        <label>Reparation Types:</label>
+        <label>Reparaciones:</label>
         {reparationTypes.map((type, index) => (
           <span key={index}>{type} <button type="button" onClick={() => removeReparationType(type)}>Remove</button></span>
         ))}

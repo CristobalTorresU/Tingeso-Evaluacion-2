@@ -32,6 +32,12 @@ public class RepairListController {
         return ResponseEntity.ok(repair);
     }
 
+    @GetMapping("/names")
+    public ResponseEntity<List<String>> getRepairListNames() {
+        List<String> repairNames = repairListService.getRepairListNames();
+        return ResponseEntity.ok(repairNames);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<RepairListEntity> deleteRepairList(@PathVariable Long id) throws Exception {
         var isDeleted = repairListService.deleteRepairList(id);
