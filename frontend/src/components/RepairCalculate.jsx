@@ -59,42 +59,43 @@ const RepairCalculate = () => {
     setRepair(repair.filter(t => t !== type));
   };
 
-  const customEncodeURIComponent = (str) => {
-    return encodeURIComponent(str).replace(/%C3%A1/g, 'á')
-                                  .replace(/%C3%A9/g, 'é')
-                                  .replace(/%C3%AD/g, 'í')
-                                  .replace(/%C3%B3/g, 'ó')
-                                  .replace(/%C3%BA/g, 'ú')
-                                  .replace(/%C3%B1/g, 'ñ')
-                                  .replace(/%C3%81/g, 'Á')
-                                  .replace(/%C3%89/g, 'É')
-                                  .replace(/%C3%8D/g, 'Í')
-                                  .replace(/%C3%93/g, 'Ó')
-                                  .replace(/%C3%9A/g, 'Ú')
-                                  .replace(/%C3%91/g, 'Ñ');
+  const toIdList = async (repair) => {
+    try {
+      let idList = "";
+      for(const element of repair) {
+        const repairList = await repair_listService.getByName(element);
+        const idOfRepair = repairList.data.id;
+        idList = idList + idOfRepair + ',';
+      }
+      return idList.slice(0, -1);
+    } catch (error) {
+      console.error('Error al obtener los IDs: ', error);
+      throw error;
+    }
   };
 
-  const formatToValidString = (listOfRepairs) => {
-    const repairString = listOfRepairs.map(customEncodeURIComponent).join(',');
-    return repairString;
-  };
-
-  const calculateRepair = (r) => {
+  const calculateRepair = async (r) => {
     r.preventDefault();
     console.log("Solicitar calcular reparacion.");
-    repairService
-      .calculate(plate, formatDate(checkinDate), formatTime(checkinHour), formatToValidString(repair), formatDate(exitDate), formatTime(exitHour), formatDate(collectDate), formatTime(collectHour))
-      .then((response) => {
-        console.log("Reparacion ha sido actualizada.", response.data);
-        navigate("/repair/list");
-      })
-      .catch((error) => {
-        console.log(
-          "Ha ocurrido un error al intentar calcular la reparacion.",
-          error
-        );
-      });
-    console.log("Fin calculo reparacion.");
+    try {
+      const idList = await toIdList(repair)
+
+      repairService
+        .calculate(plate, formatDate(checkinDate), formatTime(checkinHour), idList, formatDate(exitDate), formatTime(exitHour), formatDate(collectDate), formatTime(collectHour))
+        .then((response) => {
+          console.log("Reparacion ha sido actualizada.", response.data);
+          navigate("/repair/list");
+        })
+        .catch((error) => {
+          console.log(
+            "Ha ocurrido un error al intentar calcular la reparacion.",
+            error
+          );
+        });
+      console.log("Fin calculo reparacion.");
+    } catch (error) {
+      console.log('Error al obtener la lista de IDs de reparación:', error);
+    }
   };
 
   return (
@@ -133,7 +134,7 @@ const RepairCalculate = () => {
           variant="contained"
           color="error"
           onClick={() => removeRepair(type)}
-          style={{ marginLeft: "0.5rem"}}
+          style={{ marginRight: "0.5rem"}}
           startIcon={<DeleteIcon />}>
           </Button></span>
         ))}

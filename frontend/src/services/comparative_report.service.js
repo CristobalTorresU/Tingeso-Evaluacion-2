@@ -4,8 +4,8 @@ const getAll = () => {
     return httpClient.get('/api/type-reports/comparative-reports/list');
 }
 
-const generate = () => {
-    return httpClient.get('/api/type-reports/comparative-reports/generate');
+const generate = (month,year) => {
+    return httpClient.get("/api/type-reports/comparative-reports/generate",{params:{month,year}});
 }
 
 export default { getAll, generate};

@@ -4,8 +4,8 @@ const getAll = () => {
     return httpClient.get('/api/type-reports/');
 }
 
-const generate = () => {
-    return httpClient.get('/api/type-reports/generate');
+const generate = (month,year) => {
+    return httpClient.get("/api/type-reports/generate",{params:{month,year}});
 }
 
 const getOrder = () => {

@@ -14,6 +14,8 @@ import NotFound from './components/NotFound';
 import RepairListPrices from './components/RepairsListPrices';
 import RegisterRepairListPrices from './components/RegisterRepairsListPrices';
 import ComparativeReportList from './components/ComparativeReportList';
+import TypeReportRequest from './components/TypeReportRequest';
+import ComparativeReportRequest from './components/ComparativeReportRequest';
 
 function App() {
   return (
@@ -33,8 +35,10 @@ function App() {
           <Route path="/bonus/list" element={<AvailableBonus/>} />
           <Route path="/bonus/add" element={<AddBonus/>} />
           <Route path="/bonus/edit/:id" element={<AddBonus/>} />
-          <Route path="/report/type-report" element={<TypeReportList/>} />
-          <Route path="/report/comparative-report" element={<ComparativeReportList/>} />
+          <Route path="/report/type-report" element={<TypeReportRequest/>} />
+          <Route path="/report/type-report/list" element={<TypeReportList/>} />
+          <Route path="/report/comparative-report" element={<ComparativeReportRequest/>} />
+          <Route path="/report/comparative-report/list" element={<ComparativeReportList/>} />
           <Route path="*" element={<NotFound/>} />
         </Routes>
       </div>

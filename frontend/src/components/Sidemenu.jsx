@@ -85,15 +85,6 @@ export default function Sidemenu({ open, toggleDrawer }) {
 
       <Divider />
 
-        <ListItemButton onClick={(r) => generateReports(r)}>
-          <ListItemIcon>
-            <CalculateIcon />
-          </ListItemIcon>
-          <ListItemText primary="Generar Reportes" />
-        </ListItemButton>
-
-      <Divider />
-
         <ListItemButton onClick={() => navigate("/report/type-report")}>
           <ListItemIcon>
             <AnalyticsIcon />

@@ -12,6 +12,10 @@ const getNames = () => {
     return httpClient.get('/api/repair-list/names');
 }
 
+const getByName = name => {
+    return httpClient.get(`/api/repair-list/by-repair/${name}`);
+}
+
 const create = data => {
     return httpClient.post("/api/repair-list/", data);
 }
@@ -24,4 +28,4 @@ const remove = id => {
     return httpClient.delete(`/api/repair-list/${id}`);
 }
 
-export default { getAll, get, getNames, create, update, remove };
+export default { getAll, get, getNames, getByName, create, update, remove };
