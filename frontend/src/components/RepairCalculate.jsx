@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import repairService from "../services/repair.service";
 import repair_listService from "../services/repair_list.service";
 import CalculateIcon from "@mui/icons-material/Calculate";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -18,13 +19,13 @@ const RepairCalculate = () => {
   const [plate, setPlate] = useState("");
   const [checkinDate, setCheckinDate] = useState(new Date());
   const [checkinHour, setCheckinHour] = useState(null);
-  const [reparationTypes, setReparationTypes] = useState([]);
+  const [repair, setRepair] = useState([]);
   const [exitDate, setExitDate] = useState(new Date());
   const [exitHour, setExitHour] = useState(null);
   const [collectDate, setCollectDate] = useState(new Date());
   const [collectHour, setCollectHour] = useState(null);
   const [repairNames, setRepairNames] = useState([]); // Estado para los nombres de reparaciones
-  const [selectedReparationType, setSelectedReparationType] = useState("");
+  const [selectedRepair, setSelectedRepair] = useState("");
 
   const navigate = useNavigate();
 
@@ -50,19 +51,39 @@ const RepairCalculate = () => {
     return moment(date).format('YYYY-MM-DD');
   };
 
-  const addReparationType = (type) => {
-    setReparationTypes([...reparationTypes, type]);
+  const addRepair = (type) => {
+    setRepair([...repair, type]);
   };
 
-  const removeReparationType = (type) => {
-    setReparationTypes(reparationTypes.filter(t => t !== type));
+  const removeRepair = (type) => {
+    setRepair(repair.filter(t => t !== type));
+  };
+
+  const customEncodeURIComponent = (str) => {
+    return encodeURIComponent(str).replace(/%C3%A1/g, 'á')
+                                  .replace(/%C3%A9/g, 'é')
+                                  .replace(/%C3%AD/g, 'í')
+                                  .replace(/%C3%B3/g, 'ó')
+                                  .replace(/%C3%BA/g, 'ú')
+                                  .replace(/%C3%B1/g, 'ñ')
+                                  .replace(/%C3%81/g, 'Á')
+                                  .replace(/%C3%89/g, 'É')
+                                  .replace(/%C3%8D/g, 'Í')
+                                  .replace(/%C3%93/g, 'Ó')
+                                  .replace(/%C3%9A/g, 'Ú')
+                                  .replace(/%C3%91/g, 'Ñ');
+  };
+
+  const formatToValidString = (listOfRepairs) => {
+    const repairString = listOfRepairs.map(customEncodeURIComponent).join(',');
+    return repairString;
   };
 
   const calculateRepair = (r) => {
     r.preventDefault();
     console.log("Solicitar calcular reparacion.");
     repairService
-      .calculate(plate, formatDate(checkinDate), formatTime(checkinHour), reparationTypes, formatDate(exitDate), formatTime(exitHour), formatDate(collectDate), formatTime(collectHour))
+      .calculate(plate, formatDate(checkinDate), formatTime(checkinHour), formatToValidString(repair), formatDate(exitDate), formatTime(exitHour), formatDate(collectDate), formatTime(collectHour))
       .then((response) => {
         console.log("Reparacion ha sido actualizada.", response.data);
         navigate("/repair/list");
@@ -107,20 +128,25 @@ const RepairCalculate = () => {
         </LocalizationProvider>
 
         <div>
-        <label>Reparaciones:</label>
-        {reparationTypes.map((type, index) => (
-          <span key={index}>{type} <button type="button" onClick={() => removeReparationType(type)}>Remove</button></span>
+        {repair.map((type, index) => (
+          <span key={index}>{type} <Button 
+          variant="contained"
+          color="error"
+          onClick={() => removeRepair(type)}
+          style={{ marginLeft: "0.5rem"}}
+          startIcon={<DeleteIcon />}>
+          </Button></span>
         ))}
         <FormControl fullWidth>
           <TextField
             id="reparationType"
             label="Tipo de Reparación"
-            value={selectedReparationType}
+            value={selectedRepair}
             select
             variant="standard"
             onChange={(r) => {
-              setSelectedReparationType(r.target.value);
-              addReparationType(r.target.value);
+              setSelectedRepair(r.target.value);
+              addRepair(r.target.value);
             }}
             style={{ width: "100%" }}
           >

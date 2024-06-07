@@ -61,11 +61,16 @@ public class RepairService {
         return restTemplate.getForObject("http://repairs-list/api/repair-list/by-repair/" + repair, RepairListModel.class);
     }
 
+    public RepairListModel getRepairListById(int id) {
+        String idAsString = Integer.toString(id);
+        return restTemplate.getForObject("http://repairs-list/api/repair-list/" + idAsString, RepairListModel.class);
+    }
+
     // Multiple Repairs Version
     public boolean calculateMultipleTotalAmount(String plate,
                                                String checkinDateString,
                                                String checkinHourString,
-                                               List<String> repairNames,
+                                               List<Integer> repairsId,
                                                String exitDateString,
                                                String exitHourString,
                                                String collectDateString,
@@ -88,8 +93,9 @@ public class RepairService {
         RepairEntity repair = new RepairEntity();
 
         // Se calcula el precio de cada reparacion y se obtiene el total.
-        for (int i = 0 ; i < repairNames.size() ; i++) {
-            RepairListModel repairList = getRepairList(repairNames.get(i));
+        for (int i = 0 ; i < repairsId.size() ; i++) {
+            // TODO: Arreglar
+            RepairListModel repairList = getRepairListById(repairsId.get(i));
             reparations += calculateService.getReparationTypePrice(vehicle.getMotor(), repairList);
         }
 
@@ -123,15 +129,18 @@ public class RepairService {
 
         repairRepository.save(repair);
 
+        // TODO: Arreglar
         // Atributos para cada detalle
-        for (int i = 0 ; i < repairNames.size() ; i++) {
+        for (int i = 0 ; i < repairsId.size() ; i++) {
             DetailEntity detail = new DetailEntity();
             detail.setPlate(plate);
-            detail.setRepairType(repairNames.get(i));
+            // TODO: Arreglar
+            detail.setRepairType(getRepairListById(repairsId.get(i)).getRepairName());
             detail.setDate(checkinDate);
             detail.setHour(checkinHour);
             detail.setRepair_id(repair.getId());
-            RepairListModel repairList = getRepairList(repairNames.get(i));
+            // TODO: Arreglar
+            RepairListModel repairList = getRepairListById(repairsId.get(i));
             detail.setAmount((int)calculateService.getReparationTypePrice(vehicle.getMotor(), repairList));
             detailService.saveDetail(detail);
         }

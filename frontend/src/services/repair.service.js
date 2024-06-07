@@ -22,8 +22,8 @@ const updateCollect = data => {
 }
 */
 
-const calculate = (plate,checkinDate,checkinHour,reparationType,exitDate,exitHour,collectDate,collectHour) => {
-    return httpClient.get("/api/repairs/calculate",{params:{plate,checkinDate,checkinHour,reparationType,exitDate,exitHour,collectDate,collectHour}});
+const calculate = (plate,checkinDate,checkinHour,repair,exitDate,exitHour,collectDate,collectHour) => {
+    return httpClient.get("/api/repairs/calculate",{params:{plate,checkinDate,checkinHour,repair,exitDate,exitHour,collectDate,collectHour}});
 }
 
 /*

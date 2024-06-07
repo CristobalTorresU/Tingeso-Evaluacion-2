@@ -61,12 +61,12 @@ public class RepairController {
     public ResponseEntity<Void> calculatePrice(@RequestParam("plate") String plate,
                                                @RequestParam("checkinDate") String checkinDate,
                                                @RequestParam("checkinHour") String checkinHour,
-                                               @RequestParam("repair") List<String> repair,
+                                               @RequestParam("repair") List<Integer> repairsId,
                                                @RequestParam("exitDate") String exitDate,
                                                @RequestParam("exitHour") String exitHour,
                                                @RequestParam("collectDate") String collectDate,
                                                @RequestParam("collectHour") String collectHour) {
-        repairService.calculateMultipleTotalAmount(plate, checkinDate, checkinHour, repair,
+        repairService.calculateMultipleTotalAmount(plate, checkinDate, checkinHour, repairsId,
                 exitDate, exitHour, collectDate, collectHour);
         return ResponseEntity.noContent().build();
     }
