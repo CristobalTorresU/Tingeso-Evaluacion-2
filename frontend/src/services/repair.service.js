@@ -8,34 +8,24 @@ const get = id => {
     return httpClient.get(`/api/repairs/${id}`);
 }
 
-/*
-const create = (plate,reparationType) => {
-    return httpClient.post("/repairs/", {params:{plate,reparationType}})
-}
-
-const updateExit = data => {
-    return httpClient.put('/repairs/exit/', data);
-}
-
-const updateCollect = data => {
-    return httpClient.put('/repairs/collect/', data);
-}
-*/
-
 const calculate = (plate,checkinDate,checkinHour,repair,exitDate,exitHour,collectDate,collectHour) => {
     return httpClient.get("/api/repairs/calculate",{params:{plate,checkinDate,checkinHour,repair,exitDate,exitHour,collectDate,collectHour}});
 }
 
-/*
-const calculateIn = () => {
-    return httpClient.get("/repairs/calculateIn");
+const calculateCheckin = (plate,checkinDate,checkinHour,repair) => {
+    return httpClient.post("/api/repairs/calculate-checkin", {params:{plate,checkinDate,checkinHour,repair}})
 }
-*/
+
+const calculateExit = data => {
+    return httpClient.put('/api/repairs/calculate-exit', data);
+}
+
+const calculateCollect = data => {
+    return httpClient.put('/api/repairs/calculate-collect', data);
+}
 
 const getVehicle = plate => {
     return httpClient.get(`/api/repairs/vehicles/${plate}`);
 }
 
-//const getDetail
-
-export default { getAll, get, calculate, getVehicle };
+export default { getAll, get, calculate, calculateCheckin, calculateExit, calculateCollect, getVehicle };

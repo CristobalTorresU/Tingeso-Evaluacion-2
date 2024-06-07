@@ -17,7 +17,7 @@ const ComparativeReportRequest = () => {
   const generateReport = (e) => {
     e.preventDefault();
     console.log("Solicitar calcular planilla.", month, "-", year);
-    type_reportService
+    comparative_reportService
       .generate(month, year)
       .then((response) => {
         console.log("Planilla ha sido actualizada.", response.data);

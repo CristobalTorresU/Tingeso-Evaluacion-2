@@ -8,7 +8,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import repairService from "../services/repair.service";
-import vehicleService from "../services/vehicle.service";
 import Button from "@mui/material/Button";
 import CarRepair from "@mui/icons-material/CarRepair";
 import InfoIcon from "@mui/icons-material/Info";
@@ -18,7 +17,6 @@ const RepairList = () => {
 
     const navigate = useNavigate();
 
-    // TODO: Hacer que tome distintos atributos de vehiculos y detalles simultaneamente para mostrarlo en el front.
     const init = () => {
         repairService
             .getAll()
@@ -187,6 +185,18 @@ const RepairList = () => {
                     startIcon={<CarRepair />}
                 >
                     Añadir Reparación
+                </Button>
+            </Link>
+            <Link
+                to="/repair/add-moment"
+                style={{ textDecoration: "none", marginBottom: "1rem"}}
+            >
+                <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<CarRepair />}
+                >
+                    Añadir Reparación Momento
                 </Button>
             </Link>
             <br /> <br />

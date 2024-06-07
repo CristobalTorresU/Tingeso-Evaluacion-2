@@ -66,6 +66,139 @@ public class RepairService {
         return restTemplate.getForObject("http://repairs-list/api/repair-list/" + idAsString, RepairListModel.class);
     }
 
+    // Generate a repair, but only with checkin.
+    public boolean registerRepairAndCheckin(String plate,
+                                            String checkinDateString,
+                                            String checkinHourString,
+                                            List<Integer> repairsId) {
+        LocalDate checkinDate = LocalDate.parse(checkinDateString);
+        LocalTime checkinHour = LocalTime.parse(checkinHourString);
+
+        double reparations = 0.0;
+
+        VehicleModel vehicle = detailService.getVehicle(plate);
+        BonusModel bonuses = getBonus(vehicle.getBrand());
+
+        RepairEntity repair = new RepairEntity();
+
+        // Se calcula el precio de cada reparacion y se obtiene el total.
+        for (int i = 0 ; i < repairsId.size() ; i++) {
+            RepairListModel repairList = getRepairListById(repairsId.get(i));
+            reparations += calculateService.getReparationTypePrice(vehicle.getMotor(), repairList);
+        }
+
+        // Se realizan los calculos para cada uno de los descuentos, recargos e IVA.
+        double mileageRecharges = reparations * calculateService.getMileageRecharge(vehicle.getType(), vehicle.getMileage());
+        double yearRecharge = reparations * calculateService.getYearRecharge(vehicle.getType(), vehicle.getYear(), checkinDate);
+        double reparationDiscounts = reparations * calculateService.getReparationsDiscount(vehicle.getMotor(),
+                detailService.getDetailsByPlate(plate).size());
+        double dayDiscount = reparations * calculateService.getDayDiscount(checkinDate, checkinHour);
+        double bonusDiscount = calculateService.getBonusDiscount(bonuses);
+
+        int discounts = (int)reparationDiscounts + (int)dayDiscount + (int)bonusDiscount;
+        int recharges = (int)mileageRecharges + (int)yearRecharge;
+
+        repair.setCheckinDate(checkinDate);
+        repair.setCheckinHour(checkinHour);
+        repair.setRepairsAmount((int)reparations);
+        repair.setDiscountsAmount(discounts);
+        repair.setRechargesAmount(recharges);
+
+        repairRepository.save(repair);
+
+        // Atributos para cada detalle
+        for (int i = 0 ; i < repairsId.size() ; i++) {
+            DetailEntity detail = new DetailEntity();
+            detail.setPlate(plate);
+            detail.setRepairType(getRepairListById(repairsId.get(i)).getRepairName());
+            detail.setDate(checkinDate);
+            detail.setHour(checkinHour);
+            detail.setRepair_id(repair.getId());
+            RepairListModel repairList = getRepairListById(repairsId.get(i));
+            detail.setAmount((int)calculateService.getReparationTypePrice(vehicle.getMotor(), repairList));
+            detailService.saveDetail(detail);
+        }
+
+        return true;
+    }
+
+    /*
+    // Update a Repair to add the exit date and hour.
+    public RepairEntity updateRepairAndExit(RepairEntity repair) {
+        return repairRepository.save(repair);
+    }
+
+    // Update a Repair to add the collect date and hour and calculate the total.
+    public RepairEntity updateRepairAndCollect(RepairEntity repair) {
+        RepairEntity repair = getRepairById(id);
+        LocalDate collectDate = LocalDate.parse(collectDateString);
+        LocalTime collectHour = LocalTime.parse(collectHourString);
+
+        double reparations = repair.getRepairsAmount();
+        int discounts = repair.getDiscountsAmount();
+        int recharges = repair.getRechargesAmount();
+
+        double lateRecharge = reparations * calculateService.getLateRecharge(repair.getExitDate(), collectDate);
+        int lateRechargeInt = (int)lateRecharge;
+        double iva = reparations * 0.19;
+
+        int totalPrice = ((int)reparations + (recharges + lateRechargeInt) - discounts) + (int)iva;
+
+        repair.setCollectDate(collectDate);
+        repair.setCollectHour(collectHour);
+        repair.setRechargesAmount(recharges + lateRechargeInt);
+        repair.setIva((int)iva);
+        repair.setTotalAmount(totalPrice);
+
+        return repairRepository.save(repair);
+    }
+    */
+
+    // Update a Repair to add the exit date and hour.
+    public boolean updateRepairAndExit(Long id,
+                                       String exitDateString,
+                                       String exitHourString) {
+        RepairEntity repair = getRepairById(id);
+        LocalDate exitDate = LocalDate.parse(exitDateString);
+        LocalTime exitHour = LocalTime.parse(exitHourString);
+
+        repair.setExitDate(exitDate);
+        repair.setExitHour(exitHour);
+
+        repairRepository.save(repair);
+
+        return true;
+    }
+
+    // Update a Repair to add the collect date and hour and calculate the total.
+    public boolean updateRepairAndCollect(Long id,
+                                          String collectDateString,
+                                          String collectHourString) {
+        RepairEntity repair = getRepairById(id);
+        LocalDate collectDate = LocalDate.parse(collectDateString);
+        LocalTime collectHour = LocalTime.parse(collectHourString);
+
+        double reparations = repair.getRepairsAmount();
+        int discounts = repair.getDiscountsAmount();
+        int recharges = repair.getRechargesAmount();
+
+        double lateRecharge = reparations * calculateService.getLateRecharge(repair.getExitDate(), collectDate);
+        int lateRechargeInt = (int)lateRecharge;
+        double iva = reparations * 0.19;
+
+        int totalPrice = ((int)reparations + (recharges + lateRechargeInt) - discounts) + (int)iva;
+
+        repair.setCollectDate(collectDate);
+        repair.setCollectHour(collectHour);
+        repair.setRechargesAmount(recharges + lateRechargeInt);
+        repair.setIva((int)iva);
+        repair.setTotalAmount(totalPrice);
+
+        repairRepository.save(repair);
+
+        return true;
+    }
+
     // Multiple Repairs Version
     public boolean calculateMultipleTotalAmount(String plate,
                                                String checkinDateString,
@@ -94,7 +227,6 @@ public class RepairService {
 
         // Se calcula el precio de cada reparacion y se obtiene el total.
         for (int i = 0 ; i < repairsId.size() ; i++) {
-            // TODO: Arreglar
             RepairListModel repairList = getRepairListById(repairsId.get(i));
             reparations += calculateService.getReparationTypePrice(vehicle.getMotor(), repairList);
         }
@@ -129,17 +261,14 @@ public class RepairService {
 
         repairRepository.save(repair);
 
-        // TODO: Arreglar
         // Atributos para cada detalle
         for (int i = 0 ; i < repairsId.size() ; i++) {
             DetailEntity detail = new DetailEntity();
             detail.setPlate(plate);
-            // TODO: Arreglar
             detail.setRepairType(getRepairListById(repairsId.get(i)).getRepairName());
             detail.setDate(checkinDate);
             detail.setHour(checkinHour);
             detail.setRepair_id(repair.getId());
-            // TODO: Arreglar
             RepairListModel repairList = getRepairListById(repairsId.get(i));
             detail.setAmount((int)calculateService.getReparationTypePrice(vehicle.getMotor(), repairList));
             detailService.saveDetail(detail);
