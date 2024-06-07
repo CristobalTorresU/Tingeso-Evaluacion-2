@@ -71,7 +71,6 @@ public class RepairController {
         return ResponseEntity.noContent().build();
     }
 
-    /*
     // TODO: Implementar controlador para calcular las reparaciones con las fechas y horas puestas por separado.
     @GetMapping("/calculate-checkin")
     public ResponseEntity<Void> calculateCheckin(@RequestParam("plate") String plate,
@@ -82,6 +81,7 @@ public class RepairController {
         return ResponseEntity.noContent().build();
     }
 
+    /*
     // TODO: Implementar controlador para calcular las reparaciones con las fechas y horas puestas por separado.
     @PutMapping("/calculate-exit/{id}")
     public ResponseEntity<RepairEntity> calculateExit(@RequestBody RepairEntity repair) {
