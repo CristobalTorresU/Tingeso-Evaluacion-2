@@ -44,6 +44,10 @@ const RepairList = () => {
         navigate(`/repair/details/${id}`);
     };
 
+    const enterDateHour = (id) => {
+        navigate(`/repair/exit/${id}`);
+    };
+
     return (
         <TableContainer component={Paper}>
             <br />
@@ -162,7 +166,20 @@ const RepairList = () => {
                                     variant="contained"
                                     color="info"
                                     size="small"
-                                    onClick={() => handleDetails(repair.repair_id)}
+                                    onClick={() => enterDateHour(repair.id)}
+                                    style={{ marginLeft: "0.5rem" }}
+                                    startIcon={<InfoIcon />}
+                                >
+                                    Agregar Fecha y Hora
+                                </Button>
+                            </TableCell>
+
+                            <TableCell>
+                                <Button
+                                    variant="contained"
+                                    color="info"
+                                    size="small"
+                                    onClick={() => handleDetails(repair.id)}
                                     style={{ marginLeft: "0.5rem" }}
                                     startIcon={<InfoIcon />}
                                 >

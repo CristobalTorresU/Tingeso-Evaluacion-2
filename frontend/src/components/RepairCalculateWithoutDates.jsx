@@ -77,7 +77,7 @@ const RepairCalculateWithoutDates = () => {
       const idList = await toIdList(repair)
 
       repairService
-        .calculate(plate, formatDate(checkinDate), formatTime(checkinHour), idList)
+        .calculateCheckin(plate, formatDate(checkinDate), formatTime(checkinHour), idList)
         .then((response) => {
           console.log("Reparacion ha sido actualizada.", response.data);
           navigate("/repair/list");

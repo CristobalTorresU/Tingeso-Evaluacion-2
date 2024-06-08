@@ -18,7 +18,7 @@ const RepairDetails = () => {
 
     const init = () => {
         detailService
-            .get(id)
+            .getByRepairId(id)
             .then((response) => {
                 console.log(
                     "Mostrando planilla de reparaciones.",
@@ -47,107 +47,31 @@ const RepairDetails = () => {
             <br />
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                 <TableBody>
-                    <TableCell>
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
+                    <TableRow>
+                        <TableCell align="left" sx={{ fontWeight: "bold" }}>
                             Reparación
-                        </TableRow>
-                        <Divider />
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
-                            Reparaciones en los últimos 12 meses
-                        </TableRow>
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
-                            Descuento por horario
-                        </TableRow>
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
-                            Bonus
-                        </TableRow>
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
-                            Total Descuentos
-                        </TableRow>
-                        <Divider />
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
-                            Kilometraje
-                        </TableRow>
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
-                            Año
-                        </TableRow>
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
-                            Días de Atraso
-                        </TableRow>
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
-                            Total Recargos
-                        </TableRow>
-                        <Divider />
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
-                            IVA
-                        </TableRow>
-                        <Divider />
-                        <TableRow align="left" sx={{ fontWeight: "bold" }}>
-                            Monto Total
-                        </TableRow>
-                    </TableCell>
-                    {detail.map((detail) => (
-                        <TableCell
-                            key={detail.id}
-                        >
-                            <TableRow align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    detail.repairAmount
-                                )}
-                            </TableRow>
-                            <TableRow align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    - detail.repairsDiscount
-                                )}
-                            </TableRow>
-                            <TableRow align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    - detail.dayDiscount
-                                )}
-                            </TableRow>
-                            <TableRow align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    - detail.bonusDiscount
-                                )}
-                            </TableRow>
-                            <TableRow align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    - detail.bonusDiscount - detail.dayDiscount - detail.repairsDiscount
-                                )}
-                            </TableRow>
-                            <TableRow align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    detail.mileageRecharge
-                                )}
-                            </TableRow>
-                            <TableRow align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    detail.yearRecharge
-                                )}
-                            </TableRow>
-                            <TableRow align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    detail.lateRecharge
-                                )}
-                            </TableRow>
-                            <TableRow align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    detail.lateRecharge + detail.yearRecharge + detail.mileageRecharge
-                                )}
-                            </TableRow>
-                            <TableRow align="right">
-                                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    detail.iva
-                                )}
-                            </TableRow>
-                            <TableRow align="right">
-                                $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
-                                    detail.repairAmount - detail.repairsDiscount - detail.dayDiscount -
-                                    detail.bonusDiscount + detail.mileageRecharge + detail.yearRecharge +
-                                    detail.lateRecharge + detail.iva
-                                )}
-                            </TableRow>
                         </TableCell>
+                        <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                            Fecha
+                        </TableCell>
+                        <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                            Hora
+                        </TableCell>
+                        <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                            Monto
+                        </TableCell>
+                    </TableRow>
+                    {detail.map((detail) => (
+                        <TableRow key={detail.id}>
+                            <TableCell align="left">{detail.repairType}</TableCell>
+                            <TableCell align="left">{detail.date}</TableCell>
+                            <TableCell align="left">{detail.hour}</TableCell>
+                            <TableCell align="left">
+                                $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                                    detail.amount
+                                )}
+                            </TableCell>
+                        </TableRow>
                     ))}
                 </TableBody>
             </Table>

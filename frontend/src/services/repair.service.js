@@ -13,15 +13,15 @@ const calculate = (plate,checkinDate,checkinHour,repair,exitDate,exitHour,collec
 }
 
 const calculateCheckin = (plate,checkinDate,checkinHour,repair) => {
-    return httpClient.post("/api/repairs/calculate-checkin", {params:{plate,checkinDate,checkinHour,repair}})
+    return httpClient.get("/api/repairs/calculate-checkin", {params:{plate,checkinDate,checkinHour,repair}})
 }
 
-const calculateExit = data => {
-    return httpClient.put('/api/repairs/calculate-exit', data);
+const calculateExit = (id, exitDate, exitHour) => {
+    return httpClient.put(`/api/repairs/calculate-exit/${id}`, null, {params:{exitDate: exitDate, exitHour: exitHour}});
 }
 
-const calculateCollect = data => {
-    return httpClient.put('/api/repairs/calculate-collect', data);
+const calculateCollect = (id, collectDate, collectHour) => {
+    return httpClient.put(`/api/repairs/calculate-collect/${id}`, null, {params:{collectDate: collectDate, collectHour: collectHour}});
 }
 
 const getVehicle = plate => {

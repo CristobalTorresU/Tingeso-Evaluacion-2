@@ -17,6 +17,7 @@ import ComparativeReportList from './components/ComparativeReportList';
 import TypeReportRequest from './components/TypeReportRequest';
 import ComparativeReportRequest from './components/ComparativeReportRequest';
 import AddRepairWithoutDates from './components/RepairCalculateWithoutDates';
+import RepairCalculateExit from './components/RepairCalculateExit';
 
 function App() {
   return (
@@ -30,10 +31,11 @@ function App() {
           <Route path="/vehicle/edit/:id" element={<RegisterVehicle/>} />
           <Route path="/repair/list" element={<RepairList/>} />
           <Route path="/repair/details/:id" element={<RepairDetails/>} />
-          <Route path="/repair-list/list" element={<RepairListPrices/>} />
-          <Route path="/repair-list/register" element={<RegisterRepairListPrices/>} />
           <Route path="/repair/add" element={<AddRepair/>} />
           <Route path="/repair/add-moment" element={<AddRepairWithoutDates/>} />
+          <Route path="/repair/exit/:id" element={<RepairCalculateExit/>} />
+          <Route path="/repair-list/list" element={<RepairListPrices/>} />
+          <Route path="/repair-list/register" element={<RegisterRepairListPrices/>} />
           <Route path="/bonus/list" element={<AvailableBonus/>} />
           <Route path="/bonus/add" element={<AddBonus/>} />
           <Route path="/bonus/edit/:id" element={<AddBonus/>} />

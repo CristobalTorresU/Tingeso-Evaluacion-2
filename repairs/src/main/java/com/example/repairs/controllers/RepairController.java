@@ -23,14 +23,6 @@ public class RepairController {
     @Autowired
     DetailService detailService;
 
-    /*
-    @GetMapping("/")
-    public ResponseEntity<List<RepairEntity>> listRepairs() {
-        List<RepairEntity> repairs = repairService.getRepairs();
-        return ResponseEntity.ok(repairs);
-    }
-    */
-
     @GetMapping("/")
     public ResponseEntity<List<Map<String, Object>>> listRepairs() {
         List<RepairEntity> repairs = repairService.getRepairs();
@@ -71,7 +63,6 @@ public class RepairController {
         return ResponseEntity.noContent().build();
     }
 
-    // TODO: Implementar controlador para calcular las reparaciones con las fechas y horas puestas por separado.
     @GetMapping("/calculate-checkin")
     public ResponseEntity<Void> calculateCheckin(@RequestParam("plate") String plate,
                                                @RequestParam("checkinDate") String checkinDate,
@@ -81,23 +72,6 @@ public class RepairController {
         return ResponseEntity.noContent().build();
     }
 
-    /*
-    // TODO: Implementar controlador para calcular las reparaciones con las fechas y horas puestas por separado.
-    @PutMapping("/calculate-exit/{id}")
-    public ResponseEntity<RepairEntity> calculateExit(@RequestBody RepairEntity repair) {
-        RepairEntity repairUpdated = repairService.updateRepairAndExit(repair);
-        return ResponseEntity.ok(repairUpdated);
-    }
-
-    // TODO: Implementar controlador para calcular las reparaciones con las fechas y horas puestas por separado.
-    @PutMapping("/calculate-collect/{id}")
-    public ResponseEntity<RepairEntity> calculateCollect(@RequestBody RepairEntity repair) {
-        RepairEntity repairUpdated = repairService.updateRepairAndCollect(repair);
-        return ResponseEntity.noContent().build();
-    }
-    */
-
-    // TODO: Implementar controlador para calcular las reparaciones con las fechas y horas puestas por separado.
     @PutMapping("/calculate-exit/{id}")
     public ResponseEntity<Void> calculateExit(@PathVariable Long id,
                                                @RequestParam("exitDate") String exitDate,
@@ -106,7 +80,6 @@ public class RepairController {
         return ResponseEntity.noContent().build();
     }
 
-    // TODO: Implementar controlador para calcular las reparaciones con las fechas y horas puestas por separado.
     @PutMapping("/calculate-collect/{id}")
     public ResponseEntity<Void> calculateCollect(@PathVariable Long id,
                                                @RequestParam("collectDate") String collectDate,

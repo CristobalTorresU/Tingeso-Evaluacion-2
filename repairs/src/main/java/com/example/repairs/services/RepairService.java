@@ -122,38 +122,6 @@ public class RepairService {
         return true;
     }
 
-    /*
-    // Update a Repair to add the exit date and hour.
-    public RepairEntity updateRepairAndExit(RepairEntity repair) {
-        return repairRepository.save(repair);
-    }
-
-    // Update a Repair to add the collect date and hour and calculate the total.
-    public RepairEntity updateRepairAndCollect(RepairEntity repair) {
-        RepairEntity repair = getRepairById(id);
-        LocalDate collectDate = LocalDate.parse(collectDateString);
-        LocalTime collectHour = LocalTime.parse(collectHourString);
-
-        double reparations = repair.getRepairsAmount();
-        int discounts = repair.getDiscountsAmount();
-        int recharges = repair.getRechargesAmount();
-
-        double lateRecharge = reparations * calculateService.getLateRecharge(repair.getExitDate(), collectDate);
-        int lateRechargeInt = (int)lateRecharge;
-        double iva = reparations * 0.19;
-
-        int totalPrice = ((int)reparations + (recharges + lateRechargeInt) - discounts) + (int)iva;
-
-        repair.setCollectDate(collectDate);
-        repair.setCollectHour(collectHour);
-        repair.setRechargesAmount(recharges + lateRechargeInt);
-        repair.setIva((int)iva);
-        repair.setTotalAmount(totalPrice);
-
-        return repairRepository.save(repair);
-    }
-    */
-
     // Update a Repair to add the exit date and hour.
     public boolean updateRepairAndExit(Long id,
                                        String exitDateString,
