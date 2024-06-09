@@ -28,7 +28,7 @@ spring:
         - id: repairs
           uri: lb://repairs
           predicates:
-            - Path=/api/repairs/**
+            - Path=/api/repairs/**, /api/details/**
         - id: repairs-list
           uri: lb://repairs-list
           predicates:
@@ -36,7 +36,7 @@ spring:
         - id: reports
           uri: lb://reports
           predicates:
-            - Path=/api/type-reports/**
+            - Path=/api/type-reports/**, /api/comparative-reports/**
         - id: bonuses
           uri: lb://bonuses
           predicates:

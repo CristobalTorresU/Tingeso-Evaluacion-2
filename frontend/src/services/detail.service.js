@@ -9,7 +9,7 @@ const get = id => {
 }
 
 const getByRepairId = repairId => {
-    return httpClient.get(`/api/repairs/details/list/${repairId}`);
+    return httpClient.get(`/api/details/list/${repairId}`);
 }
 
 const create = data => {

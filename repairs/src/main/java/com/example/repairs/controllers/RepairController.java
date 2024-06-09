@@ -20,8 +20,6 @@ import java.util.stream.Collectors;
 public class RepairController {
     @Autowired
     RepairService repairService;
-    @Autowired
-    DetailService detailService;
 
     @GetMapping("/")
     public ResponseEntity<List<Map<String, Object>>> listRepairs() {
@@ -86,44 +84,6 @@ public class RepairController {
                                                @RequestParam("collectHour") String collectHour) {
         repairService.updateRepairAndCollect(id, collectDate, collectHour);
         return ResponseEntity.noContent().build();
-    }
-
-    // Details
-    @GetMapping("/details/")
-    public ResponseEntity<List<DetailEntity>> listDetails() {
-        List<DetailEntity> details = detailService.getDetails();
-        return ResponseEntity.ok(details);
-    }
-
-    @GetMapping("/details/{id}")
-    public ResponseEntity<DetailEntity> getDetailById(@PathVariable Long id) {
-        DetailEntity detail = detailService.getDetailById(id);
-        return ResponseEntity.ok(detail);
-    }
-
-    @GetMapping("/details/month/{month}/year/{year}")
-    public ResponseEntity<List<DetailEntity>> getDetailsByMonthAndYear(@PathVariable int month,
-                                                                      @PathVariable int year) {
-        List<DetailEntity> details = detailService.getByMonthAndYear(month, year);
-        return ResponseEntity.ok(details);
-    }
-
-    @GetMapping("/vehicles/{plate}")
-    public ResponseEntity<String> getVehicleType(@PathVariable String plate) {
-        String type = detailService.getVehicleType(plate);
-        return ResponseEntity.ok(type);
-    }
-
-    @GetMapping("/details/list/{repairId}")
-    public ResponseEntity<List<DetailEntity>> getDetailsByRepairId(@PathVariable Long repairId) {
-        List<DetailEntity> details = detailService.getDetailsByRepairId(repairId);
-        return ResponseEntity.ok(details);
-    }
-
-    @GetMapping("/details/vehicles/{plate}")
-    public ResponseEntity<List<DetailEntity>> getDetailsByPlate(@PathVariable String plate) {
-        List<DetailEntity> details = detailService.getDetailsByPlate(plate);
-        return ResponseEntity.ok(details);
     }
 
     // RestTemplate

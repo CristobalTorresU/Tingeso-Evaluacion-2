@@ -16,8 +16,6 @@ import java.util.List;
 public class TypeReportController {
     @Autowired
     TypeReportService typeReportService;
-    @Autowired
-    ComparativeReportService comparativeReportService;
 
     @GetMapping("/")
     public ResponseEntity<List<TypeReportEntity>> listTypeReports() {
@@ -30,22 +28,6 @@ public class TypeReportController {
         List<String> repairNames = typeReportService.getRepairNames();
         typeReportService.makeBlankReport(repairNames);
         typeReportService.makeReport(month, year);
-        return ResponseEntity.noContent().build();
-    }
-
-    // Comparative Reports
-    @GetMapping("/comparative-reports/list")
-    public ResponseEntity<List<ComparativeReportEntity>> listComparativeReports() {
-        List<ComparativeReportEntity> comparativeReports = comparativeReportService.getComparativeReports();
-        return ResponseEntity.ok(comparativeReports);
-    }
-
-    @GetMapping("/comparative-reports/generate")
-    public ResponseEntity<Void> bringComparativeReports(@RequestParam("month") int month, @RequestParam("year") int year) {
-        List<String> repairNames = comparativeReportService.getRepairNames();
-        comparativeReportService.makeBlankReport(repairNames, month, year);
-        comparativeReportService.makeReport(month, year);
-        comparativeReportService.calculateVariations();
         return ResponseEntity.noContent().build();
     }
 
