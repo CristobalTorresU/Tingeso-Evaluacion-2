@@ -20,7 +20,7 @@ public class TypeReportService {
     RestTemplate restTemplate;
 
     public ArrayList<TypeReportEntity> getTypeReports() {
-        return (ArrayList<TypeReportEntity>) typeReportRepository.findAll();
+        return typeReportRepository.getAll();
     }
 
     public void makeBlankReport(List<String> repairs) {

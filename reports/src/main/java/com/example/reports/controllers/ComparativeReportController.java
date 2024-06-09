@@ -23,7 +23,7 @@ public class ComparativeReportController {
     @GetMapping("/generate")
     public ResponseEntity<Void> bringComparativeReports(@RequestParam("month") int month, @RequestParam("year") int year) {
         List<String> repairNames = comparativeReportService.getRepairNames();
-        comparativeReportService.makeBlankReport(repairNames);
+        comparativeReportService.makeBlankReport(repairNames, month, year);
         comparativeReportService.makeReport(month, year);
         comparativeReportService.calculateVariations();
         return ResponseEntity.noContent().build();

@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+
 @Repository
 public interface ComparativeReportRepository extends JpaRepository<ComparativeReportEntity, Long>{
+    @Query(value = "SELECT * FROM comparative_report ORDER BY id ASC", nativeQuery = true)
+    public ArrayList<ComparativeReportEntity> getAll();
+
     public ComparativeReportEntity findByRepair(String repairName);
-    /*
-    @Query(value = "SELECT * FROM comparative_report WHERE comparative_report.repair = :repairName", nativeQuery = true)
-    public ComparativeReportEntity findByRepair(@Param("repairName") String repairName);
-     */
 }

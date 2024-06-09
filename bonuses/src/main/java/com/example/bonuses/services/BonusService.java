@@ -35,6 +35,12 @@ public class BonusService {
         return bonusRepository.save(bonus);
     }
 
+    public void decreaseBonus(String brand) {
+        BonusEntity bonus = bonusRepository.findByBrand(brand);
+        bonus.setQuantity(bonus.getQuantity() - 1);
+        bonusRepository.save(bonus);
+    }
+
     public boolean deleteBonus(Long id) throws Exception {
         try{
             bonusRepository.deleteById(id);

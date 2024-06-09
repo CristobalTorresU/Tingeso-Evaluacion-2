@@ -38,6 +38,12 @@ public class BonusController {
         return ResponseEntity.ok(bonusNew);
     }
 
+    @PutMapping("/decrease/{brand}")
+    public ResponseEntity<Void> decreaseBonus(@PathVariable String brand) {
+        bonusService.decreaseBonus(brand);
+        return ResponseEntity.noContent().build();
+    }
+
     @PutMapping("/")
     public ResponseEntity<BonusEntity> updateBonus(@RequestBody BonusEntity bonus) {
         BonusEntity bonusUpdated = bonusService.updateBonus(bonus);

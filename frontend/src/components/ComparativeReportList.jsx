@@ -122,7 +122,7 @@ const ComparativeReportList = () => {
                                 <TableCell align="right">
                                     {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                                         comparativeReport.quantity2
-                                    )}%
+                                    )}
                                 </TableCell>
                             </TableRow>
                             <TableRow>

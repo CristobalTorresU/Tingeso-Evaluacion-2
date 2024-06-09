@@ -3,6 +3,10 @@ package com.example.repairs.services;
 import com.example.repairs.models.BonusModel;
 import com.example.repairs.models.RepairListModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,9 +47,12 @@ public class CalculateService {
             if (bonuses.getQuantity() > 0) {
                 bonusDiscount = bonuses.getAmount();
                 bonuses.setQuantity(bonuses.getQuantity() - 1);
-                /*
-                restTemplate.put("http://localhost:8082/api/bonuses/", bonuses);
-                */
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+                String bonusBrand = bonuses.getBrand();
+                restTemplate.exchange("http://bonuses/api/bonuses/decrease/" + bonusBrand, HttpMethod.PUT, requestEntity, Void.class);
             }
         }
 
