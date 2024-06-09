@@ -79,13 +79,13 @@ const ComparativeReportList = () => {
                                     {NumberToMonth(comparativeReports[0].month)}
                                 </TableCell>
                                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                                    % Variacion
+                                    % Variación
                                 </TableCell>
                                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                                     {NumberToMonth(comparativeReports[0].month - 1)}
                                 </TableCell>
                                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                                    % Variacion
+                                    % Variación
                                 </TableCell>
                                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                                     {NumberToMonth(comparativeReports[0].month - 2)}

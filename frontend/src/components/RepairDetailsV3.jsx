@@ -84,6 +84,7 @@ const RepairDetails = () => {
                     variant="contained"
                     color="primary"
                     startIcon={<CarRepair />}
+                    sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
                 >
                     Volver a Registro de Reparaciones
                 </Button>

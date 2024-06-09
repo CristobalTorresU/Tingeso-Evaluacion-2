@@ -76,8 +76,9 @@ const RepairListPrices = () => {
           variant="contained"
           color="primary"
           startIcon={<PersonAddIcon />}
+          sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
         >
-          Añadir Tipo de Reparacion
+          Añadir Tipo de Reparación
         </Button>
       </Link>
       <br /> <br />
@@ -85,19 +86,19 @@ const RepairListPrices = () => {
         <TableHead>
           <TableRow>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Nombre Reparacion
+              Nombre Reparación
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Precio Gasolina
             </TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              Precio Diesel
+              Precio Diésel
             </TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              Precio Hibrido
+              Precio Híbrido
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Precio Electrico
+              Precio Eléctrico
             </TableCell>
           </TableRow>
         </TableHead>
@@ -108,22 +109,22 @@ const RepairListPrices = () => {
             >
               <TableCell align="left">{repairList.repairName}</TableCell>
               <TableCell align="right">
-                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                   repairList.gasolineAmount
                 )}
               </TableCell>
               <TableCell align="right">
-                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                   repairList.dieselAmount
                 )}
               </TableCell>
               <TableCell align="right">
-                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                   repairList.hibridAmount
                 )}
               </TableCell>
               <TableCell align="right">
-                {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
+                $ {new Intl.NumberFormat("es-CL", { style: "decimal" }).format(
                   repairList.electricAmount
                 )}
               </TableCell>
@@ -134,6 +135,7 @@ const RepairListPrices = () => {
                   size="small"
                   onClick={() => handleEdit(repairList.id)}
                   style={{ marginLeft: "0.5rem" }}
+                  sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
                   startIcon={<EditIcon />}
                 >
                   Editar

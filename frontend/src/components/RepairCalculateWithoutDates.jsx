@@ -9,11 +9,14 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import moment from "moment";
+import { Grid } from "@mui/material";
 
 const RepairCalculateWithoutDates = () => {
   const [plate, setPlate] = useState("");
@@ -116,6 +119,8 @@ const RepairCalculateWithoutDates = () => {
           />
         </FormControl>
 
+        <br />
+        <br />
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <DatePicker label="Fecha Entrada" selected={checkinDate} onChange={(checkinDate) => setCheckinDate(checkinDate)} />
         </LocalizationProvider>
@@ -124,35 +129,45 @@ const RepairCalculateWithoutDates = () => {
           <TimePicker label="Hora Entrada" ampm={false} value={checkinHour} onChange={setCheckinHour}/>
         </LocalizationProvider>
 
-        <div>
+        <br />
+        <br />
+        <Box>
+      <Grid container spacing={2}>
         {repair.map((type, index) => (
-          <span key={index}>{type} <Button 
-          variant="contained"
-          color="error"
-          onClick={() => removeRepair(type)}
-          style={{ marginRight: "0.5rem"}}
-          startIcon={<DeleteIcon />}>
-          </Button></span>
+          <Grid item key={index}>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => removeRepair(type)}
+              startIcon={<DeleteIcon />}
+              sx={{ marginRight: "0.5rem" }}
+            >
+              {type}
+            </Button>
+          </Grid>
         ))}
-        <FormControl fullWidth>
-          <TextField
-            id="reparationType"
-            label="Tipo de Reparación"
-            value={selectedRepair}
-            select
-            variant="standard"
-            onChange={(r) => {
-              setSelectedRepair(r.target.value);
-              addRepair(r.target.value);
-            }}
-            style={{ width: "100%" }}
-          >
-            {repairNames.map((name, index) => (
-              <MenuItem key={index} value={name}>{name}</MenuItem>
-            ))}
-          </TextField>
-        </FormControl>
-      </div>
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <TextField
+              id="reparationType"
+              label="Tipo de Reparación"
+              value={selectedRepair}
+              select
+              variant="standard"
+              onChange={(r) => {
+                setSelectedRepair(r.target.value);
+                addRepair(r.target.value);
+              }}
+              fullWidth
+            >
+              {repairNames.map((name, index) => (
+                <MenuItem key={index} value={name}>{name}</MenuItem>
+              ))}
+            </TextField>
+          </FormControl>
+        </Grid>
+      </Grid>
+    </Box>
 
         <br />
         <br />
@@ -162,6 +177,7 @@ const RepairCalculateWithoutDates = () => {
             color="info"
             onClick={(r) => calculateRepair(r)}
             style={{ marginLeft: "0.5rem" }}
+            sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
             startIcon={<CalculateIcon />}
           >
             Calcular Reparación

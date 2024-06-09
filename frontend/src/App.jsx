@@ -36,6 +36,7 @@ function App() {
           <Route path="/repair/exit/:id" element={<RepairCalculateExit/>} />
           <Route path="/repair-list/list" element={<RepairListPrices/>} />
           <Route path="/repair-list/register" element={<RegisterRepairListPrices/>} />
+          <Route path="/repair-list/edit/:id" element={<RegisterRepairListPrices/>} />
           <Route path="/bonus/list" element={<AvailableBonus/>} />
           <Route path="/bonus/add" element={<AddBonus/>} />
           <Route path="/bonus/edit/:id" element={<AddBonus/>} />

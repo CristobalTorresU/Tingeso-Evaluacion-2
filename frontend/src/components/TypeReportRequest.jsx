@@ -91,6 +91,7 @@ const TypeReportRequest = () => {
             color="info"
             onClick={(e) => generateReport(e)}
             style={{ marginLeft: "0.5rem" }}
+            sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
             startIcon={<CalculateIcon />}
           >
             Generar Reporte

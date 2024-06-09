@@ -25,11 +25,11 @@ const RegisterRepairsListPrices = () => {
             repairListService
                 .update(repairList)
                 .then((response) => {
-                    console.log("Tipo de reparacion ha sido actualizada.", response.data);
+                    console.log("Tipo de reparación ha sido actualizada.", response.data);
                     navigate("/repair-list/list");
                 })
                 .catch((error) => {
-                    console.log("Ocurrió un error al actualizar el tipo de reparacion.", error);
+                    console.log("Ocurrió un error al actualizar el tipo de reparación.", error);
                 });
         } else {
             repairListService
@@ -39,14 +39,14 @@ const RegisterRepairsListPrices = () => {
                     navigate("/repair-list/list");
                 })
                 .catch((error) => {
-                    console.log("Ocurrió un error al crear el tipo de reparacion.", error);
+                    console.log("Ocurrió un error al crear el tipo de reparación.", error);
                 });
         }
     };
 
     useEffect(() => {
         if (id) {
-            setTitleRepairsListForm("Editar Tipo de Reparacion");
+            setTitleRepairsListForm("Editar Tipo de Reparación");
             repairListService
                 .get(id)
                 .then((repairList) => {
@@ -60,7 +60,7 @@ const RegisterRepairsListPrices = () => {
                     console.log("Se produjo un error.", error);
                 });
         } else {
-            setTitleRepairsListForm("Registrar Nuevo Tipo de Reparacion");
+            setTitleRepairsListForm("Registrar Nuevo Tipo de Reparación");
         }
     }, []);
     return (
@@ -105,7 +105,7 @@ const RegisterRepairsListPrices = () => {
                 <FormControl fullWidth>
                     <TextField
                         id="dieselAmount"
-                        label="Precio Diesel"
+                        label="Precio Diésel"
                         type="number"
                         value={dieselAmount}
                         variant="standard"
@@ -119,7 +119,7 @@ const RegisterRepairsListPrices = () => {
                 <FormControl fullWidth>
                     <TextField
                         id="hibridAmount"
-                        label="Precio Hibrido"
+                        label="Precio Híbrido"
                         type="number"
                         value={hibridAmount}
                         variant="standard"
@@ -133,7 +133,7 @@ const RegisterRepairsListPrices = () => {
                 <FormControl fullWidth>
                     <TextField
                         id="electricAmount"
-                        label="Precio Electrico"
+                        label="Precio Eléctrico"
                         type="number"
                         value={electricAmount}
                         variant="standard"
@@ -150,9 +150,10 @@ const RegisterRepairsListPrices = () => {
                         color="info"
                         onClick={(r) => saveRepairsList(r)}
                         style={{ marginLeft: "0.5rem" }}
+                        sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
                         startIcon={<SaveIcon />}
                     >
-                        Guardar Lista de Reparacion
+                        Guardar Lista de Reparación
                     </Button>
                 </FormControl>
             </form>

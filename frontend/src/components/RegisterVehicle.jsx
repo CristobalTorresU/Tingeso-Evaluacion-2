@@ -212,6 +212,7 @@ const RegisterVehicle = () => {
                         color="info"
                         onClick={(v) => saveVehicle(v)}
                         style={{ marginLeft: "0.5rem" }}
+                        sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
                         startIcon={<SaveIcon />}
                     >
                         Guardar Vehículo

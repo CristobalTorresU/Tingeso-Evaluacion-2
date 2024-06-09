@@ -76,6 +76,7 @@ const VehicleList = () => {
           variant="contained"
           color="primary"
           startIcon={<PersonAddIcon />}
+          sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
         >
           Añadir Automóvil
         </Button>
@@ -134,6 +135,7 @@ const VehicleList = () => {
                   size="small"
                   onClick={() => handleEdit(vehicle.id)}
                   style={{ marginLeft: "0.5rem" }}
+                  sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
                   startIcon={<EditIcon />}
                 >
                   Editar

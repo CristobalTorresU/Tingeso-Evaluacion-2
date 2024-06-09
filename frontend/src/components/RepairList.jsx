@@ -49,12 +49,12 @@ const RepairList = () => {
     };
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ witdh: '100%'}}>
             <br />
             <br />
             <h3>Registro de Reparaciones</h3>
             <br />
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+            <Table sx={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
                 <TableHead>
                     <TableRow>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
@@ -70,7 +70,7 @@ const RepairList = () => {
                             Tipo Vehículo
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            Año Fabricacion
+                            Año Fabricación
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: "bold" }}>
                             Tipo Motor
@@ -168,6 +168,7 @@ const RepairList = () => {
                                     size="small"
                                     onClick={() => enterDateHour(repair.id)}
                                     style={{ marginLeft: "0.5rem" }}
+                                    sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
                                     startIcon={<InfoIcon />}
                                 >
                                     Agregar Fecha y Hora
@@ -181,6 +182,7 @@ const RepairList = () => {
                                     size="small"
                                     onClick={() => handleDetails(repair.id)}
                                     style={{ marginLeft: "0.5rem" }}
+                                    sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
                                     startIcon={<InfoIcon />}
                                 >
                                     Detalles
@@ -193,18 +195,6 @@ const RepairList = () => {
             </Table>
             <br />
             <Link
-                to="/repair/add"
-                style={{ textDecoration: "none", marginBottom: "1rem"}}
-            >
-                <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<CarRepair />}
-                >
-                    Añadir Reparación
-                </Button>
-            </Link>
-            <Link
                 to="/repair/add-moment"
                 style={{ textDecoration: "none", marginBottom: "1rem"}}
             >
@@ -212,8 +202,9 @@ const RepairList = () => {
                     variant="contained"
                     color="primary"
                     startIcon={<CarRepair />}
+                    sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
                 >
-                    Añadir Reparación Momento
+                    Añadir Reparación
                 </Button>
             </Link>
             <br /> <br />

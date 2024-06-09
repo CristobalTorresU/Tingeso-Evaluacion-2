@@ -76,6 +76,7 @@ const AvailableBonus = () => {
                     variant="contained"
                     color="primary"
                     startIcon={<MoreTimeIcon />}
+                    sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
                 >
                     Ingresar Bonus
                 </Button>
@@ -114,6 +115,7 @@ const AvailableBonus = () => {
                                     size="small"
                                     onClick={() => handleEdit(bonus.id)}
                                     style={{ marginLeft: "0.5rem" }}
+                                    sx={{ bgcolor: '#9C27B0', '&:hover': { bgcolor: '#AA75F0' } }}
                                     startIcon={<EditIcon />}
                                 >
                                     Editar
