@@ -49,8 +49,6 @@ public class ComparativeReportService {
         }
     }
 
-    // TODO: Aqui ocurre un error al calcular los valores del reporte.
-    // TODO: Verificar que se este ejecutando correctamente.
     public void makeReport(int month, int year) {
         List<DetailModel> detailsNow = getDetailsByMonthAndYear(month, year);
 
@@ -64,7 +62,6 @@ public class ComparativeReportService {
         int month2before = previous2Month.getMonthValue();
         List<DetailModel> details2month = getDetailsByMonthAndYear(month2before, year2before);
 
-        // TODO: Descifrar que fue lo que hacia esto.
         for (int i = 0 ; i < detailsNow.size() ; i++) {
             // Busca el reporte con la reparacion indicada.
             ComparativeReportEntity report = comparativeReportRepository.findByRepair(detailsNow.get(i).getRepairType());
@@ -87,8 +84,6 @@ public class ComparativeReportService {
         }
     }
 
-    // TODO: Probar con 5 meses de reparaciones.
-    // TODO: Aqui ocurre un error al calcular los valores del reporte.
     public void calculateVariations() {
         List<ComparativeReportEntity> reports = getComparativeReports();
         for (int i = 0 ; i < reports.size() ; i++) {
@@ -102,7 +97,6 @@ public class ComparativeReportService {
         }
     }
 
-    // TODO: Aqui ocurre un error al calcular los valores del reporte.
     public int equation(int qaNow , int qa) {
         if (qa == 0 && qaNow == 0) {
             return 0;
@@ -115,7 +109,7 @@ public class ComparativeReportService {
 
     public List<DetailModel> getDetailsByMonthAndYear(int month, int year) {
         ParameterizedTypeReference<List<DetailModel>> responseType = new ParameterizedTypeReference<List<DetailModel>>() {};
-        return restTemplate.exchange("http://repairs/api/repairs/details/month/" + month + "/year/" + year, HttpMethod.GET, null, responseType).getBody();
+        return restTemplate.exchange("http://repairs/api/details/month/" + month + "/year/" + year, HttpMethod.GET, null, responseType).getBody();
     }
 
     public List<String> getRepairNames() {

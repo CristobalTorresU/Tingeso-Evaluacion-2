@@ -75,7 +75,7 @@ public class TypeReportService {
 
     public List<DetailModel> getDetailsByMonthAndYear(int month, int year) {
         ParameterizedTypeReference<List<DetailModel>> responseType = new ParameterizedTypeReference<List<DetailModel>>() {};
-        return restTemplate.exchange("http://repairs/api/repairs/details/month/" + month + "/year/" + year, HttpMethod.GET, null, responseType).getBody();
+        return restTemplate.exchange("http://repairs/api/details/month/" + month + "/year/" + year, HttpMethod.GET, null, responseType).getBody();
     }
 
     public String getType(String plate) {
