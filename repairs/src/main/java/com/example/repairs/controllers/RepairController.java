@@ -23,15 +23,7 @@ public class RepairController {
 
     @GetMapping("/")
     public ResponseEntity<List<Map<String, Object>>> listRepairs() {
-        List<RepairEntity> repairs = repairService.getRepairs();
-        List<Map<String, Object>> repairsWithVehicles = repairs.stream().map(repair -> {
-            // TODO: Hacer que con getVehicleByRepairId se obtenga el vehículo de la reparación, tomando solo el primer objeto.
-            VehicleModel vehicle = repairService.getVehicleByRepairId(repair.getId());
-            return Map.of(
-                    "repair", repair,
-                    "vehicle", vehicle
-            );
-        }).collect(Collectors.toList());
+        List<Map<String, Object>> repairsWithVehicles = repairService.combineRepairsAndVehicles();
         return ResponseEntity.ok(repairsWithVehicles);
     }
 

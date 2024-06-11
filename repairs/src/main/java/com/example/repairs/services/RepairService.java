@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RepairService {
@@ -66,7 +67,17 @@ public class RepairService {
         return restTemplate.getForObject("http://repairs-list/api/repair-list/" + idAsString, RepairListModel.class);
     }
 
-    // Generate a repair, but only with checkin.
+    public List<Map<String, Object>> combineRepairsAndVehicles() {
+        List<RepairEntity> repairs = getRepairs();
+        return repairs.stream().map(repair -> {
+            VehicleModel vehicle = getVehicleByRepairId(repair.getId());
+            return Map.of(
+                    "repair", repair,
+                    "vehicle", vehicle
+            );
+        }).collect(java.util.stream.Collectors.toList());
+    }
+
     public boolean registerRepairAndCheckin(String plate,
                                             String checkinDateString,
                                             String checkinHourString,
@@ -122,7 +133,6 @@ public class RepairService {
         return true;
     }
 
-    // Update a Repair to add the exit date and hour.
     public boolean updateRepairAndExit(Long id,
                                        String exitDateString,
                                        String exitHourString) {
@@ -138,7 +148,6 @@ public class RepairService {
         return true;
     }
 
-    // Update a Repair to add the collect date and hour and calculate the total.
     public boolean updateRepairAndCollect(Long id,
                                           String collectDateString,
                                           String collectHourString) {
@@ -163,84 +172,6 @@ public class RepairService {
         repair.setTotalAmount(totalPrice);
 
         repairRepository.save(repair);
-
-        return true;
-    }
-
-    // Multiple Repairs Version
-    public boolean calculateMultipleTotalAmount(String plate,
-                                               String checkinDateString,
-                                               String checkinHourString,
-                                               List<Integer> repairsId,
-                                               String exitDateString,
-                                               String exitHourString,
-                                               String collectDateString,
-                                               String collectHourString) {
-        // Formatear Fechas
-        LocalDate checkinDate = LocalDate.parse(checkinDateString);
-        LocalDate exitDate = LocalDate.parse(exitDateString);
-        LocalDate collectDate = LocalDate.parse(collectDateString);
-
-        // Formatear Horas
-        LocalTime checkinHour = LocalTime.parse(checkinHourString);
-        LocalTime exitHour = LocalTime.parse(exitHourString);
-        LocalTime collectHour = LocalTime.parse(collectHourString);
-
-        double reparations = 0.0;
-
-        VehicleModel vehicle = detailService.getVehicle(plate);
-        BonusModel bonuses = getBonus(vehicle.getBrand());
-
-        RepairEntity repair = new RepairEntity();
-
-        // Se calcula el precio de cada reparacion y se obtiene el total.
-        for (int i = 0 ; i < repairsId.size() ; i++) {
-            RepairListModel repairList = getRepairListById(repairsId.get(i));
-            reparations += calculateService.getReparationTypePrice(vehicle.getMotor(), repairList);
-        }
-
-        // Se realizan los calculos para cada uno de los descuentos, recargos e IVA.
-        double mileageRecharges = reparations * calculateService.getMileageRecharge(vehicle.getType(), vehicle.getMileage());
-        double yearRecharge = reparations * calculateService.getYearRecharge(vehicle.getType(), vehicle.getYear(), checkinDate);
-        double lateRecharge = reparations * calculateService.getLateRecharge(exitDate, collectDate);
-        double reparationDiscounts = reparations * calculateService.getReparationsDiscount(vehicle.getMotor(),
-                detailService.getDetailsByPlate(plate).size());
-        double dayDiscount = reparations * calculateService.getDayDiscount(checkinDate, checkinHour);
-        double bonusDiscount = calculateService.getBonusDiscount(bonuses);
-
-        int discounts = (int)reparationDiscounts + (int)dayDiscount + (int)bonusDiscount;
-        int recharges = (int)mileageRecharges + (int)yearRecharge + (int)lateRecharge;
-        int iva = (int)(reparations * 0.19);
-
-        int totalPrice = ((int)reparations + recharges - discounts) + iva;
-
-        // Atributos para la reparacion
-        repair.setCheckinDate(checkinDate);
-        repair.setCheckinHour(checkinHour);
-        repair.setExitDate(exitDate);
-        repair.setExitHour(exitHour);
-        repair.setCollectDate(collectDate);
-        repair.setCollectHour(collectHour);
-        repair.setTotalAmount(totalPrice);
-        repair.setIva(iva);
-        repair.setRepairsAmount((int)reparations);
-        repair.setDiscountsAmount(discounts);
-        repair.setRechargesAmount(recharges);
-
-        repairRepository.save(repair);
-
-        // Atributos para cada detalle
-        for (int i = 0 ; i < repairsId.size() ; i++) {
-            DetailEntity detail = new DetailEntity();
-            detail.setPlate(plate);
-            detail.setRepairType(getRepairListById(repairsId.get(i)).getRepairName());
-            detail.setDate(checkinDate);
-            detail.setHour(checkinHour);
-            detail.setRepair_id(repair.getId());
-            RepairListModel repairList = getRepairListById(repairsId.get(i));
-            detail.setAmount((int)calculateService.getReparationTypePrice(vehicle.getMotor(), repairList));
-            detailService.saveDetail(detail);
-        }
 
         return true;
     }
