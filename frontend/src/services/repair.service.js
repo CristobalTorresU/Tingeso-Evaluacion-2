@@ -28,4 +28,8 @@ const getVehicle = plate => {
     return httpClient.get(`/api/repairs/vehicles/${plate}`);
 }
 
-export default { getAll, get, calculate, calculateCheckin, calculateExit, calculateCollect, getVehicle };
+const remove = id => {
+    return httpClient.delete(`/api/repairs/${id}`);
+}
+
+export default { getAll, get, calculate, calculateCheckin, calculateExit, calculateCollect, getVehicle, remove };

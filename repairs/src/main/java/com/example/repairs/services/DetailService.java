@@ -41,6 +41,19 @@ public class DetailService {
         return detailAsList;
     }
 
+    public boolean deleteDetail(Long id) throws Exception {
+        try {
+            detailRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public void deleteDetailsByRepairId(Long id) {
+        detailRepository.deleteByRepair_id(id);
+    }
+
     public List<DetailEntity> getDetailsByRepairId(Long id) {
         return detailRepository.findByRepair_id(id);
     }

@@ -40,8 +40,10 @@ public class RepairService {
     }
 
     public boolean deleteRepair(Long id) throws Exception {
-        try{
+        try {
+            Long repairId = getRepairById(id).getId();
             repairRepository.deleteById(id);
+            detailService.deleteDetailsByRepairId(repairId);
             return true;
         } catch (Exception e) {
             throw new Exception(e.getMessage());

@@ -22,8 +22,6 @@ public interface DetailRepository extends JpaRepository<DetailEntity, Long>{
     @Query(value = "SELECT * FROM detail WHERE detail.repair_id = :id", nativeQuery = true)
     public List<DetailEntity> findByRepair_id(Long id);
 
-    /*
-    @Query(value = "SELECT * FROM detail WHERE (detail.date BETWEEN :startDate AND :endDate)", nativeQuery = true)
-    List<DetailEntity> findByMonthAndYearAndPreviousMonths(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-    */
+    @Query(value = "DELETE FROM detail WHERE detail.repair_id = :id", nativeQuery = true)
+    public void deleteByRepair_id(Long id);
 }

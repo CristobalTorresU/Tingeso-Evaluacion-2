@@ -11,6 +11,7 @@ import repairService from "../services/repair.service";
 import Button from "@mui/material/Button";
 import CarRepair from "@mui/icons-material/CarRepair";
 import InfoIcon from "@mui/icons-material/Info";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const RepairList = () => {
     const [repairs, setRepair] = useState([]);
@@ -47,6 +48,27 @@ const RepairList = () => {
     const enterDateHour = (id) => {
         navigate(`/repair/exit/${id}`);
     };
+
+    const handleDelete = (id) => {
+        console.log("Printing id", id);
+        const confirmDelete = window.confirm(
+          "¿Esta seguro que desea borrar esta reparacion?"
+        );
+        if (confirmDelete) {
+          repairService
+            .remove(id)
+            .then((response) => {
+              console.log("La reparacion ha sido eliminada.", response.data);
+              init();
+            })
+            .catch((error) => {
+              console.log(
+                "Se ha producido un error al intentar eliminar la reparacion.",
+                error
+              );
+            });
+        }
+      };
 
     return (
         <TableContainer component={Paper} sx={{ witdh: '100%'}}>
@@ -173,9 +195,7 @@ const RepairList = () => {
                                 >
                                     Agregar Fecha y Hora
                                 </Button>
-                            </TableCell>
 
-                            <TableCell>
                                 <Button
                                     variant="contained"
                                     color="info"
@@ -186,6 +206,17 @@ const RepairList = () => {
                                     startIcon={<InfoIcon />}
                                 >
                                     Detalles
+                                </Button>
+
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    size="small"
+                                    onClick={() => handleDelete(repair.id)}
+                                    style={{ marginLeft: "0.5rem" }}
+                                    startIcon={<DeleteIcon />}
+                                >
+                                    Agregar Fecha y Hora
                                 </Button>
                             </TableCell>
                         </TableRow>
