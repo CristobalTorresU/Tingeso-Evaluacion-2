@@ -16,8 +16,12 @@ public class VehicleService {
         return (ArrayList<VehicleEntity>) vehicleRepository.findAll();
     }
 
+    public boolean validPlate(String plate) {
+        return plate.matches("[A-Z]{4}[0-9]{2}");
+    }
+
     public VehicleEntity saveVehicle(VehicleEntity vehicle) {
-        if (vehicleRepository.findByPlate(vehicle.getPlate()) != null) {
+        if (vehicleRepository.findByPlate(vehicle.getPlate()) != null || !validPlate(vehicle.getPlate())) {
             return null;
         }
         return vehicleRepository.save(vehicle);
